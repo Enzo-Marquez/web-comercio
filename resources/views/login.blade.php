@@ -1,13 +1,11 @@
-@extends('app')
 
-@section('content')
 
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="assets/login.css">
 	
 
 </head>
@@ -19,7 +17,7 @@
   <form method="post">
 
     <div class="login-box">
-      <img src="img/Escuela.png" class="avatar" alt="Avatar Image">
+      <img src="assets/img/Escuela.png" class="avatar" alt="Avatar Image">
       <h1>Login</h1>
       <form>
         <!-- USERNAME INPUT -->
@@ -30,9 +28,9 @@
         <input id="typePasswordX" name="pass" type="password" placeholder="Ingrese su contraseña" required/>
         <input type="submit" value="Ingresar">
 		    <input type="button" onclick="location='index.php'"value="volver">
+        <p>¿No tienes una cuenta? <a href="register">Regístrate aquí</a></p>
       </form>
     </div>
 
-    @yield('content')
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\CarrerasController;
 use App\Http\Controllers\AniosController;
 use App\Http\Controllers\UnidadCurricularController;
 use App\Models\UnidadCurricular;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,14 @@ use App\Models\UnidadCurricular;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/register', function () {
+    return view('users/register');
 });
 
 //TRUNOS//
@@ -74,3 +83,21 @@ Route::delete('/anios{id}', [AniosController::class, 'destroy'])->name('anios-de
 //INICIO UNIDAD CURRICULAR//
 
 Route::resource('unidadcurricular', UnidadCurricularController::class);
+
+//FIN UNIDAD CURRICULAR//
+
+// INICIO USERS //
+
+Route::get('/users', function () {
+    return view('users.register');
+})->name('users');
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+
+Route::post('/users', [UserController::class, 'store'])->name('users');
+
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users-edit');
+Route::patch('/users/{id}', [UserController::class, 'update'])->name('users-update');
+Route::delete('/users{id}', [UserController::class, 'destroy'])->name('users-destroy');
+
+// FIN USERS // 

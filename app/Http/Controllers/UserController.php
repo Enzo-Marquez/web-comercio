@@ -26,7 +26,7 @@ class UserController extends Controller
             'email' => 'required',
         ]);
 
-        $user = new user;
+        $user = new User;
         $user->usu_dni= $request->usu_dni;
         $user->usu_nom = $request->usu_nom;
         $user->usu_ape = $request->usu_ape;
@@ -34,20 +34,23 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->save();
 
-        return redirect()->route('users')->with('success', 'Usuario Registrado Correctamente');
-    }
-    public function index(){
-        $users = user::all();
-        return view('users.index', ['users' => $users]);
+        return redirect()->route('users.index')->with('success', 'Usuario Registrado Correctamente');
     }
 
+    public function index() {
+        $user = User::all();
+        return view('users.index', ['users' => $user]);
+    }
+    
+
     public function show($id){
-        $user = user::find($id);
+        $user = User::find($id);
         return view('users.show', ['user' => $user]);
     }
 
+
     public function update(Request $request, $id){
-        $user = user::find($id);
+        $user = User::find($id);
         $user->usu_dni= $request->usu_dni;
         $user->usu_nom = $request->usu_nom;
         $user->usu_ape = $request->usu_ape;
@@ -55,13 +58,13 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->save();
 
-        return redirect()->route('users')->with('success', 'Usuario Actualizado!');
+        return redirect()->route('users.index')->with('success', 'Usuario Actualizado!');
     }
 
     public function destroy($id){
-        $user = user::find($id);
+        $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('users')->with('success', 'Usuario Eliminado!');
+        return redirect()->route('users.index')->with('success', 'Usuario Eliminado!');
     }
 }

@@ -28,7 +28,7 @@
         <input id="typePasswordX" name="pass" type="password" placeholder="Ingrese su contraseña" required/>
         <input type="submit" value="Ingresar">
 		    <input type="button" onclick="location='index.php'"value="volver">
-        <p>¿No tienes una cuenta? <a href="register">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="users">Regístrate aquí</a></p>
       </form>
     </div>
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->char('usu_dni', 8)->zerofill();
+            $table->char('usu_dni');
             $table->string('usu_nom');
             $table->string('usu_ape');
             $table->string('usu_contra');

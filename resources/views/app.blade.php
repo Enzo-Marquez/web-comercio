@@ -17,6 +17,7 @@
             margin: 0;
             padding: 0;
             font-family: sans-serif;  
+            background-image: url('./assets/img/Fondo-Pagina.jpg');
         }
         .color-container {
             width: 16px;
@@ -52,6 +53,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/unidadcurricular">Unidad Curricular</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Usuarios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

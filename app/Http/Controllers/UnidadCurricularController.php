@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\UnidadCurricular;
 use App\Models\Anio;
 use App\Models\Carrera;
+use Illuminate\Pagination\Paginator;
 
 class UnidadCurricularController extends Controller
 {
@@ -12,12 +13,15 @@ class UnidadCurricularController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $unidadcurricular = UnidadCurricular::all();
-        $anios = Anio::all();
-        $carreras = Carrera::all();
-        return view('unidadcurricular.index', ['unidadcurricular' => $unidadcurricular, 'anios' => $anios, 'carreras' => $carreras]);
-    }
+{
+    Paginator::useBootstrap();
+
+    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(6);
+    $anios = Anio::all();
+    $carreras = Carrera::all();
+
+    return view('unidadcurricular.index', compact('unidadcurricular', 'anios', 'carreras'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -36,6 +40,8 @@ class UnidadCurricularController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:unidad_curriculars|max:255',
+            'anios_id' => 'required|exists:anios,id',
+            'carreras_id' => 'required|exists:carreras,id',
             
         ]);
 

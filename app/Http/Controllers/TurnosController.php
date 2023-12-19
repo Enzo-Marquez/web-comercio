@@ -29,7 +29,7 @@ class TurnosController extends Controller
         return redirect()->route('turnos')->with('success', 'Turno Agregado Correctamente');
     }
     public function index(){
-        $turno = turno::all();
+        $turno = turno::paginate(4); 
         return view('turnos.index', ['turnos' => $turno]);
     }
 

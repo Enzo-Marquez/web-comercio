@@ -29,7 +29,8 @@ class AniosController extends Controller
         return redirect()->route('anios')->with('success', 'Año Agregado Correctamente');
     }
     public function index(){
-        $anios = anio::all();
+        $anios = Anio::paginate(6); 
+        // el metodo paginate es para mostrar hasta 10 datos por lista
         return view('anios.index', ['anios' => $anios]);
     }
 

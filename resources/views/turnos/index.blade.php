@@ -2,67 +2,130 @@
 
 @section('content')
 
-<div class="container w-25 border p-4 mt-4">
-    <form action="{{ route('turnos') }}" method="POST">
-      @csrf
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Formulario de Turnos</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('turnos') }}" method="POST">
+                        @csrf
 
-      @if (session('success'))
-        <h6 class="alert alert-success">{{ session('success')}}</h6>
-      @endif
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
 
-      @error('description')
-      <h6 class="alert alert-danger">{{ $message }}</h6>
-      @enderror
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
-    <div class="mb-3">
-    <label for="description" class="form-label">Turnos</label>
-    <div class="form-text">Ingrese los turnos disponibles de las mesas de examen, 
-    estos una vez creados se podrán seleccionar en un desplegable en la creación
-    de la mesa de examen</div>
-    <input type="text" name="description" class="form-control">
-  </div>
-  <button type="submit" class="btn btn-primary">Crear Turno</button>
-    </form>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Turnos</label>
+                            <input type="text" name="description" class="form-control"
+                                placeholder="Ingrese los turnos disponibles">
+                            <div class="form-text">
+                                Estos turnos, una vez creados, se podrán seleccionar en un desplegable en la creación de
+                                la mesa de exámenes.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear Turno</button>
+                    </form>
+                </div>
+            </div>
 
-    <div>
-      @foreach ($turnos as $turno)
-         <div class="row py-1">
-              <div class="col-md-9 d-flex align-items-center">
-                <a href="{{ route('turnos-edit', ['id' => $turno->id]) }}">{{ $turno->description}}</a>
-              </div>
-              <div class="col-md-3 d-flex justify-content-end">
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal{{$turno->id}}">
-              Eliminar
-             </button>
-          </div>
-      </div>
+            <div class="mt-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($turnos as $turno)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('turnos-edit', ['id' => $turno->id]) }}">{{ $turno->description }}</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modal{{ $turno->id }}">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
 
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal{{ $turno->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fs-5" id="exampleModalLabel">Eliminar Turno</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Al eliminar el Turno <strong>{{ $turno->description }}</strong>, se eliminará
+                                            la opción de seleccionar dicho turno en la creación de la mesa de exámenes. ¿Está seguro
+                                            de que desea eliminar el Turno?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver
+                                            </button>
+                                            <form action="{{ route('turnos-destroy', ['id' => $turno->id]) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </tbody>
+                </table>
 
+                <!-- Paginación -->
+               <div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {{-- Anterior --}}
+            @if ($turnos->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link">Anterior</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $turnos->previousPageUrl() }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            @endif
 
-      <!-- Modal -->
-      <div class="modal fade" id="modal{{ $turno->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Turno</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Al eliminar el Turno <strong>{{ $turno->description }}</strong> se eliminara la opcion de seleccionar dicho turno en la creacion de la mesa de examen
-        ¿Está seguro que desea eliminar el Turno?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-    <form action="{{ route('turnos-destroy', ['id' => $turno->id]) }}" method="POST">
-    @method('DELETE')
-    @csrf
-    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal{{ $turno->id }}">Eliminar</button>
-    </form>
-      </div>
-    </div>
-  </div>
+            {{-- Números de página --}}
+            @for ($i = 1; $i <= $turnos->lastPage(); $i++)
+                <li class="page-item {{ $turnos->currentPage() == $i ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $turnos->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Siguiente --}}
+            @if ($turnos->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $turnos->nextPageUrl() }}" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link">Siguiente</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
 </div>
-      @endforeach   
-    </div>
-</div>
+
 @endsection

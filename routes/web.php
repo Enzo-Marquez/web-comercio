@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 Route::get('/login', function () {
     return view('login');
 });
@@ -96,5 +100,3 @@ Route::patch('/users/{id}', [UserController::class, 'update'])->name('users-upda
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users-destroy');
 
 // FIN USERS // 
-
-

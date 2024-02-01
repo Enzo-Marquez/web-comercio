@@ -63,24 +63,30 @@ class UnidadCurricularController extends Controller
      * @param int
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $unidadcurricular = UnidadCurricular::find($id);
-        $anios = Anio::all();
-        $carreras = carrera::all();
-
-        return view('unidadcurricular.show', ['unidadcurricular' => $unidadcurricular, 'anios' => $anios, 'carreras' => $carreras]);
+        $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(10);
+        
+        return view('unidadcurricular.lista',compact('unidadcurricular'));
     }
+
+
+ 
 
     /**
      * Show the form for editing the specified resource.
      * @param int
      * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
-    {
-        //
-    }
+    public function edit($id)
+{
+    $unidadcurricular = UnidadCurricular::findOrFail($id);
+    $anios = Anio::all();
+    $carreras = Carrera::all();
+
+    return view('unidadcurricular.edit', compact('unidadcurricular', 'anios', 'carreras'));
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -113,6 +119,6 @@ class UnidadCurricularController extends Controller
         $unidadcurricular = UnidadCurricular::find($id);
         $unidadcurricular->delete();
         
-        return redirect()->route('unidadcurricular.index')->with('success', 'Unidad Curricular Eliminada');
+        return redirect()->route('unidadcurricular.lista')->with('success', 'Unidad Curricular Eliminada');
     }
 }

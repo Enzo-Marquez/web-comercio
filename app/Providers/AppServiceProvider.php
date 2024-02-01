@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +21,24 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        $this->registerGate();
     }
+    
+    protected function registerGate()
+    {
+        Gate::define('admin', function ($user) {
+            return $user->user_type === 'admin';
+        });
+    
+        Gate::define('user', function ($user) {
+            return $user->user_type === 'user';
+        });
+    
+        Gate::define('moderator', function ($user) {
+            return $user->user_type === 'moderator';
+        });
+    }
+    
 }

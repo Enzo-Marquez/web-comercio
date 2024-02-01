@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Administrador</b>',
+    'logo' => '<b>Gestion de Mesas</b>',
     'logo_img' => 'vendor/adminlte/dist/img/Escuela.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -312,18 +312,52 @@ return [
             'can'  => 'manage-blog',
         ],
 
-// Paginas
+
+// Paginas Users:
+
+        ['header' => 'Gestion de Mesas',
+        'can'     => 'user'],
 
 
-        ['header' => 'Editor de Mesas'],
+
+        [
+            'text'        => 'Ver Mesas Disponibles',
+            'url'         => '/lista',
+            'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'fa fa-eye',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+
+        // [
+        //     'text'        => 'Inscribirme a una mesa',
+        //     'url'         => '/',
+        //     'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+        //     'icon'        => 'fa fa-pencil',
+        //     // 'label'       => 4,
+        //     'label_color' => 'success',
+        // ],
+
+
+
+// Paginas Admins:
+
+        ['header' => 'Editor de Mesas',
+        'can'     => 'admin'],
 
         [
             'text'    => 'Gestionar Mesas ',
             'icon'    => 'fas fa-fw fa-share',
+            'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             'submenu' => [
+                
                 [
                     'text' => 'Años',
                     'url'  => 'anios',
+                    'can'     => 'admin',
+
                 ],
                 [
                     'text' => 'Carreras',
@@ -336,6 +370,10 @@ return [
                 [
                     'text' => 'Unidad Curricular',
                     'url'  => 'unidadcurricular',
+                ],
+                [
+                    'text' => 'Listas de Unidades Curriculares',
+                    'url'  => 'unidadcurricular/listas',
                 ],
         ],
     ],
@@ -376,9 +414,32 @@ return [
         //     'label_color' => 'success',
         // ],
 
+
+        [
+            'text'        => 'Docentes',
+            'url'         => '/docentes',
+            'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'far fa-fw fa-file',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        
+
         [
             'text'        => 'Crear Mesa de Examen',
-            'url'         => 'admin/carreras',
+            'url'         => '/mesaexamens',
+            'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'far fa-fw fa-file',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Lista de Mesas de Examen',
+            'url'         => '/mesaexamens/lista',
+            'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
@@ -388,7 +449,7 @@ return [
         [
             'text'        => 'Inscripciones',
             'url'         => 'admin/carreras',
-            
+            'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
             'label_color' => 'success',
@@ -398,33 +459,33 @@ return [
 
         ['header' => 'Configuraciones'],
         [
-            'text' => 'Usuarios',
-            'url'  => 'admin/settings',
+            'text' => 'Perfil',
+            'url'  => '/usuarios',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
-            'text' => 'Cambiar Contraseña',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'Roles ',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Administrador',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Profesor',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Alumno',
-                    'url'  => '#',
-                ],
-            ],
-        ],
+        // [
+        //     'text' => 'Cambiar Contraseña',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-lock',
+        // ],
+        // [
+        //     'text'    => 'Roles ',
+        //     'icon'    => 'fas fa-fw fa-share',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Administrador',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text' => 'Profesor',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text' => 'Alumno',
+        //             'url'  => '#',
+        //         ],
+        //     ],
+        // ],
         // ['header' => 'labels'],
         // [
         //     'text'       => 'important',

@@ -24,8 +24,7 @@
                         <div class="mb-3">
                             <label for="description" class="form-label">Años</label>
                             <div class="form-text">
-                                Ingrese los años disponibles para las mesas de exámenes. Estos, una vez creados, se podrán
-                                seleccionar en un desplegable en la creación de la mesa de exámenes.
+                                Ingrese los años disponibles para las mesas de exámenes. Estos, una vez creados, se podrán seleccionar en un desplegable en la creación de la mesa de exámenes.
                             </div>
                             <input type="text" name="description" class="form-control">
                         </div>
@@ -47,37 +46,32 @@
                             @foreach ($anios as $anio)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('anios-edit', ['id' => $anio->id]) }}">{{ $anio->description }}</a>
+                                        <a>{{ $anio->description }}</a>
                                     </td>
                                     <td class="text-end">
-                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#modal{{ $anio->id }}">
+                                        <a href="{{ route('anios-edit', ['id' => $anio->id]) }}" class="btn btn-primary btn-sm">
+                                            Editar
+                                        </a>
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal{{ $anio->id }}">
                                             Eliminar
                                         </button>
                                     </td>
                                 </tr>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="modal{{ $anio->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <!-- Modal (Eliminación) -->
+                                <div class="modal fade" id="modal{{ $anio->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title fs-5" id="exampleModalLabel">Eliminar Año</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Al eliminar el año <strong>{{ $anio->description }}</strong>, se eliminará
-                                                la opción de seleccionar dicho año en la creación de la mesa de exámenes.
-                                                ¿Está seguro de que desea eliminar el Año?
+                                                Al eliminar el año <strong>{{ $anio->description }}</strong>, se eliminará la opción de seleccionar dicho año en la creación de la mesa de exámenes. ¿Está seguro de que desea eliminar el Año?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Volver
-                                                </button>
-                                                <form action="{{ route('anios-destroy', ['id' => $anio->id]) }}"
-                                                    method="POST">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <form action="{{ route('anios-destroy', ['id' => $anio->id]) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -92,45 +86,44 @@
                     
                     <!-- Controles de paginación -->
                     <div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {{-- Anterior --}}
-            @if ($anios->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">Anterior</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $anios->previousPageUrl() }}" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            @endif
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {{-- Anterior --}}
+                                @if ($anios->onFirstPage())
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Anterior</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $anios->previousPageUrl() }}" aria-label="Anterior">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                @endif
 
-            {{-- Números de página --}}
-            @for ($i = 1; $i <= $anios->lastPage(); $i++)
-                <li class="page-item {{ $anios->currentPage() == $i ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $anios->url($i) }}">{{ $i }}</a>
-                </li>
-            @endfor
+                                {{-- Números de página --}}
+                                @for ($i = 1; $i <= $anios->lastPage(); $i++)
+                                    <li class="page-item {{ $anios->currentPage() == $i ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $anios->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
 
-            {{-- Siguiente --}}
-            @if ($anios->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $anios->nextPageUrl() }}" aria-label="Siguiente">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">Siguiente</span>
-                </li>
-            @endif
-        </ul>
-    </nav>
-</div>
+                                {{-- Siguiente --}}
+                                @if ($anios->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $anios->nextPageUrl() }}" aria-label="Siguiente">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Siguiente</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
+                    </div>
 
-                    
                 @else
                     <p>No hay años disponibles.</p>
                 @endif

@@ -60,7 +60,6 @@
         </div>
     </div>
 </div>
-
 <!-- Confirmar actualización -->
 <div class="modal fade" id="confirmUpdateModal" tabindex="-1" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -93,7 +92,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Aceptar</a>
             </div>
         </div>
     </div>

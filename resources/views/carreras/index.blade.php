@@ -34,7 +34,7 @@
             </div>
 
             <div class="mt-4">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Carrera</th>
@@ -45,34 +45,31 @@
                         @foreach ($carreras as $carrera)
                             <tr>
                                 <td>
-                                    <a href="{{ route('carreras-edit', ['id' => $carrera->id]) }}">{{ $carrera->description }}</a>
+                                    <a>{{ $carrera->description }}</a>
                                 </td>
                                 <td class="text-end">
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modal{{ $carrera->id }}">
+                                    <a href="{{ route('carreras-edit', ['id' => $carrera->id]) }}" class="btn btn-primary btn-sm">
+                                        Editar
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal{{ $carrera->id }}">
                                         Eliminar
                                     </button>
                                 </td>
                             </tr>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="modal{{ $carrera->id }}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- Modal (Eliminación) -->
+                            <div class="modal fade" id="modal{{ $carrera->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title fs-5" id="exampleModalLabel">Eliminar Carrera</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Al eliminar la Carrera <strong>{{ $carrera->description }}</strong>, se eliminará la
-                                            opción de seleccionar dicha carrera en la creación de la mesa de exámenes. ¿Está seguro
-                                            de que desea eliminar la Carrera?
+                                            Al eliminar la Carrera <strong>{{ $carrera->description }}</strong>, se eliminará la opción de seleccionar dicha carrera en la creación de la mesa de exámenes. ¿Está seguro de que desea eliminar la Carrera?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver
-                                            </button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                             <form action="{{ route('carreras-destroy', ['id' => $carrera->id]) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
@@ -88,45 +85,44 @@
 
                 <!-- Paginación -->
                <div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {{-- Anterior --}}
-            @if ($carreras->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">Anterior</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $carreras->previousPageUrl() }}" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            @endif
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {{-- Anterior --}}
+                            @if ($carreras->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link">Anterior</span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $carreras->previousPageUrl() }}" aria-label="Anterior">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            @endif
 
-            {{-- Números de página --}}
-            @for ($i = 1; $i <= $carreras->lastPage(); $i++)
-                <li class="page-item {{ $carreras->currentPage() == $i ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $carreras->url($i) }}">{{ $i }}</a>
-                </li>
-            @endfor
+                            {{-- Números de página --}}
+                            @for ($i = 1; $i <= $carreras->lastPage(); $i++)
+                                <li class="page-item {{ $carreras->currentPage() == $i ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $carreras->url($i) }}">{{ $i }}</a>
+                                </li>
+                            @endfor
 
-            {{-- Siguiente --}}
-            @if ($carreras->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $carreras->nextPageUrl() }}" aria-label="Siguiente">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">Siguiente</span>
-                </li>
-            @endif
-        </ul>
-    </nav>
-</div>
-
+                            {{-- Siguiente --}}
+                            @if ($carreras->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $carreras->nextPageUrl() }}" aria-label="Siguiente">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <span class="page-link">Siguiente</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
                 </div>
+
             </div>
         </div>
     </div>

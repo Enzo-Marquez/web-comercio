@@ -12,7 +12,23 @@
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+        <strong>Error:</strong> Te faltaron campos por completar.
+    </div>
+@endif
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Error:</strong> Por favor, revisa los siguientes campos antes de continuar.
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                         <form action="{{ url('/mesaexamens') }}" method="POST">
                             @csrf
 
@@ -80,7 +96,7 @@
 
 <div class="col-md-4">
     <label for="presidente_id" class="form-label">Presidente</label>
-    <select name="presidente_id" class="form-select">
+    <select name="presidente_id" class="form-select presidente-select">
         <option selected disabled>Seleccione un Presidente</option>
         @foreach ($docentes as $docente)
             <option value="{{ $docente->id }}">{{ $docente->nom_doc }}</option>
@@ -90,7 +106,7 @@
 
 <div class="col-md-4">
     <label for="vocal_id" class="form-label">Vocal</label>
-    <select name="vocal_id" class="form-select">
+    <select name="vocal_id" class="form-select vocal-select">
         <option selected disabled>Seleccione un Vocal</option>
         @foreach ($docentes as $docente)
             <option value="{{ $docente->id }}">{{ $docente->nom_doc }}</option>
@@ -100,7 +116,7 @@
 
 <div class="col-md-4">
     <label for="vocal2_id" class="form-label">Vocal 2</label>
-    <select name="vocal2_id" class="form-select">
+    <select name="vocal2_id" class="form-select vocal2-select">
         <option selected disabled>Seleccione un Vocal</option>
         @foreach ($docentes as $docente)
             <option value="{{ $docente->id }}">{{ $docente->nom_doc }}</option>
@@ -145,6 +161,25 @@
 
                 $('.unidad-curricular-select').val(null);
             });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <!-- Agrega aquí el script de Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar Select2 para los campos deseados
+            $('.presidente-select, .vocal-select, .vocal2-select').select2();
         });
     </script>
 @endsection

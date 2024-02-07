@@ -55,28 +55,61 @@ class MesaexamenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+     // En el controlador
+
+     public function getUnidadesCurriculares(Request $request)
+     {
+         $carreraId = $request->input('carreras_id');
+         $anioId = $request->input('anios_id');
+ 
+         $unidadesCurriculares = UnidadCurricular::where('carreras_id', $carreraId)
+             ->where('anios_id', $anioId)
+             ->get();
+ 
+         return response()->json($unidadesCurriculares);
+     }
+ 
+
+
+
     public function store(Request $request)
-    {
-        $request->validate([
-            'carreras_id' => 'required|exists:carreras,id',
-            'anios_id' => 'required|exists:anios,id',
-            'unidad_curriculars_id' => 'required|exists:unidad_curriculars,id',
-            'turnos_id' => 'required|exists:turnos,id',
-            'user_id' => 'required|exists:users,id',
-            'hora' => 'required',
-            'llamado' => 'required',
-            'llamado2' => 'required',
-            'presidente_id' => 'required',
-            'vocal_id' => 'required',
-            'vocal2_id' => 'required',
-            // Agrega aquí las validaciones para las demás columnas necesarias
-        ]);
+{
+    $request->validate([
+        'carreras_id' => 'required|exists:carreras,id',
+        'anios_id' => 'required|exists:anios,id',
+        'unidad_curriculars_id' => 'required|exists:unidad_curriculars,id',
+        'turnos_id' => 'required|exists:turnos,id',
+        'user_id' => 'required|exists:users,id',
+        'hora' => 'required',
+        'llamado' => 'required',
+        'llamado2' => 'required',
+        'presidente_id' => 'required',
+        'vocal_id' => 'required',
+        'vocal2_id' => 'required',
+        
+    ]);
 
-        $mesasexamenes = new Mesaexamen($request->all());
-        $mesasexamenes->save();
+    // Verifica si ya existe una mesa con la misma combinación de carrera, año y unidad curricular
+    $mesaExistente = Mesaexamen::where([
+        'carreras_id' => $request->carreras_id,
+        'anios_id' => $request->anios_id,
+        'unidad_curriculars_id' => $request->unidad_curriculars_id,
+    ])->first();
 
-        return redirect()->route('mesaexamens.index')->with('success', 'Nueva Mesa de Examen Agregada');
+    if ($mesaExistente) {
+        // Muestra un mensaje de error y redirige de vuelta al formulario
+        return redirect()->route('mesaexamens.index')->with('error', 'Ya existe una mesa con la misma combinación de carrera, año y unidad curricular.');
     }
+
+    // Si no hay una mesa existente, crea la nueva mesa
+    $mesasexamenes = new Mesaexamen($request->all());
+    $mesasexamenes->save();
+
+    return redirect()->route('mesaexamens.index')->with('success', 'Nueva Mesa de Examen Agregada');
+}
+
 
     // Resto de los métodos (show, edit, update, destroy) sigue la estructura similar al controlador de Unidad Curricular.
 
@@ -88,13 +121,32 @@ class MesaexamenController extends Controller
 
 
 
-    public function show()
-    {
-        // Lógica para obtener datos para la vista lista.blade.php, si es necesario
-        $mesasexamenes = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'presidente', 'vocal', 'vocal2')->paginate(10);
+    public function show(Request $request)
+{
+    Paginator::useBootstrap();
 
-        return view('mesaexamens.lista', compact('mesasexamenes'));
+    $query = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'presidente', 'vocal', 'vocal2');
+
+    // Aplica filtros si se proporcionan en la solicitud
+    if ($request->filled('filtro_anio')) {
+        $query->whereHas('anio', function ($q) use ($request) {
+            $q->where('id', $request->filtro_anio);
+        });
     }
+
+    if ($request->filled('filtro_carrera')) {
+        $query->whereHas('carrera', function ($q) use ($request) {
+            $q->where('id', $request->filtro_carrera);
+        });
+    }
+
+    $mesasexamenes = $query->paginate(10);
+    $anios = Anio::all(); // Asegúrate de obtener los años necesarios aquí
+    $carreras = Carrera::all(); // Asegúrate de obtener las carreras necesarias aquí
+
+    return view('mesaexamens.lista', compact('mesasexamenes', 'anios', 'carreras'));
+}
+
     
     
     

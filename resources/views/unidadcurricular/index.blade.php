@@ -18,8 +18,10 @@
                         @endif
 
                         @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                            <div class="alert alert-danger">
+                            <strong>Error:</strong> El campo "Unidad Curricular" es obligatorio.
+                            </div>
+                            @enderror
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Unidad Curricular</label>

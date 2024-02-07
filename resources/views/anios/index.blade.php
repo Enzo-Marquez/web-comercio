@@ -17,9 +17,11 @@
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
 
-                        @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                             @error('description')
+                            <div class="alert alert-danger">
+                            <strong>Error:</strong> El campo "Año" es obligatorio.
+                            </div>
+                            @enderror
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Años</label>

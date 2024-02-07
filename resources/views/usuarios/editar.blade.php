@@ -10,39 +10,46 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-
                             @if ($errors->any())
-                                <div class="alert alert-dark alert-dismissible fade show" role="alert">
-                                    <strong>¡Revise los campos!</strong>
-                                    @foreach ($errors->all() as $error)
-                                        <span class="badge badge-danger">{{ $error }}</span>
-                                    @endforeach
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>¡Error al procesar la información!</strong>
+                                    <p>Por favor, revise los siguientes campos:</p>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                             @endif
 
-                            <form action="{{ route('usuarios.update', $user->id) }}" method="POST" id="editForm">
+                            <form action="{{ route('usuarios.update', $usuarioEditar->id) }}" method="POST" id="editForm">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
-
                                             <label for="email">Email</label>
-                                            <input type="text" name="email" class="form-control" value="{{ $user->email }}" readonly style="background-color: #f2f2f2; color: #555; cursor: not-allowed;">
-
+                                            <input type="text" name="email" class="form-control" value="{{ $usuarioEditar->email }}" readonly style="background-color: #f2f2f2; color: #555; cursor: not-allowed;">
                                             <label for="name">Nombre</label>
-                                            <input type="text" name="name" class="form-control" value="{{ $user->name }}">
-
+                                            <input type="text" name="name" class="form-control" value="{{ $usuarioEditar->name }}">
                                             <label for="apellido">Apellido</label>
-                                            <input type="text" name="apellido" class="form-control" value="{{ $user->apellido }}">
-
+                                            <input type="text" name="apellido" class="form-control" value="{{ $usuarioEditar->apellido }}">
                                             <label for="dni">DNI</label>
-                                            <input type="number" name="dni" class="form-control" value="{{ $user->dni }}">
-                                        </div>
+                                            <input type="number" name="dni" class="form-control" value="{{ $usuarioEditar->dni }}">
+                                            @if(\Illuminate\Support\Facades\Auth::user()->can('edit-roles'))
+    <label for="rol">Rol</label>
+    <select name="rol" class="form-control">
+        @foreach($roles as $rol)
+            <option value="{{ $rol }}" {{ $usuarioEditar->user_type == $rol ? 'selected' : '' }}>{{ ucfirst($rol) }}</option>
+        @endforeach
+    </select>
+@endif
 
+                                            </select>
+                                        </div>
                                         <br>
                                     </div>
                                 </div>

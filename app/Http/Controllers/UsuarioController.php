@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Enums\UserType;
+use Illuminate\Support\Facades\Auth;
+
+
 
 use Illuminate\Support\Arr;
 
@@ -15,43 +19,89 @@ use Illuminate\Support\Arr;
 class UsuarioController extends Controller
 {
 
+
+
     public function index()
-    {
-        $usuarios = User::paginate(5);
-        return view('usuarios.index', compact('usuarios'));
+{
+    // Obtener el usuario autenticado
+    $usuarioAutenticado = Auth::user();
+
+    // Inicializar la variable para almacenar los usuarios
+    $usuarios = null;
+
+    // Check if the user is an admin
+    if ($usuarioAutenticado->user_type === 'admin') {
+        // Si es un admin, obtener todos los usuarios
+        $usuarios = User::all();
+    } else {
+        // Si no es un admin, obtener solo su propio usuario
+        $usuarios = User::where('id', $usuarioAutenticado->id)->get();
     }
+
+    return view('usuarios.index', compact('usuarios'));
+}
+
+
+
+
 
 
    
 
-    public function edit($id)
-    {
-        $user = User::find($id);
-        
+public function edit($id)
+{
+    // Obtener el usuario que se va a editar
+    $usuarioEditar = User::find($id);
 
-        return view('usuarios.editar', compact('user'));
+    // Obtener el usuario autenticado
+    $usuarioAutenticado = Auth::user();
+
+    // Verificar permisos
+    if ($usuarioAutenticado->user_type !== 'admin' && $usuarioAutenticado->id !== $usuarioEditar->id) {
+        abort(403, 'No tienes permisos para editar este usuario.');
     }
 
+    // Obtener roles para migración
+    $roles = UserType::forMigration();
 
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'apellido' => 'required',
-            'dni' => 'required',
-           
-            'email' => 'required|email|unique:users,email,' . $id,
-           
-            
-        ]);
+    // Verificar si el usuario autenticado es un administrador
+    $isAdmin = $usuarioAutenticado->user_type == UserType::Admin;
 
-        $input = $request->all();
+    return view('usuarios.editar', compact('usuarioEditar', 'roles', 'isAdmin'));
+}
 
-        $user = User::find($id);
-        $user->update($input);
-        
-        return redirect()->route('usuarios.index');
+
+    
+    
+
+
+public function update(Request $request, $id)
+{
+    $this->validate($request, [
+        'name' => 'required',
+        'apellido' => 'required',
+        'dni' => 'required',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'rol' => '', // Elimina la regla de validación para el campo 'rol'
+    ]);
+
+    $input = $request->all();
+
+    $user = User::find($id);
+    $user->update(Arr::except($input, 'rol'));
+
+    // Verifica si se proporciona un valor para 'rol' antes de actualizar
+    if (isset($input['rol'])) {
+        $user->user_type = $input['rol'];
     }
+
+    $user->save();
+
+    return redirect()->route('usuarios.index');
+}
+
+
+
 
 
     public function destroy($id)
@@ -59,4 +109,18 @@ class UsuarioController extends Controller
         User::find($id)->delete();
         return redirect()->route('usuarios.index');
     }
+
+
+    public function show()
+    {
+        $usuarios = User::all();
+        return view('usuarios.roles' , compact('usuarios'));
+    }
+
+
+     
+
+
+
+
 }

@@ -8,6 +8,9 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Formulario de Docentes</h5>
+
+                     
+                
                 </div>
                 <div class="card-body">
                     <form action="{{ route('docentes') }}" method="POST">
@@ -18,8 +21,10 @@
                         @endif
 
                         @error('nom_doc')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                            <div class="alert alert-danger">
+                            <strong>Error:</strong> El campo "Docente" es obligatorio.
+                            </div>
+                            @enderror
 
                         <div class="mb-3">
                             <label for="nom_doc" class="form-label">Docentes</label>
@@ -32,6 +37,14 @@
                     </form>
                 </div>
             </div>
+
+            <div class="mt-4">
+                <form action="{{ route('docentes') }}" method="GET" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar docentes...">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </form>
 
             <div class="mt-4">
                 <table class="table table-bordered">

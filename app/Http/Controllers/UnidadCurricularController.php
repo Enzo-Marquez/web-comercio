@@ -9,33 +9,59 @@ use Illuminate\Pagination\Paginator;
 
 class UnidadCurricularController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\Response
-     */
+    
+
+    public function filter(Request $request)
+{
+        Paginator::useBootstrap();
+    
+        $query = UnidadCurricular::with('anio', 'carrera');
+    
+        // Aplicar filtros si existen en la solicitud
+        if ($request->filled('anios_id')) {
+            $query->where('anios_id', $request->anios_id);
+        }
+    
+        if ($request->filled('carrera_id')) {
+            $query->where('carreras_id', $request->carrera_id);
+        }
+
+    
+        $unidadcurricular = $query->paginate(15);
+        $anios = Anio::all();
+        $carreras = Carrera::all();
+    
+        return view('unidadcurricular.lista', compact('unidadcurricular', 'anios', 'carreras'));
+    }
+
+
+
+    
+
+
+
+
+
+
+
     public function index()
 {
     Paginator::useBootstrap();
 
-    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(6);
+    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(15);
     $anios = Anio::all();
     $carreras = Carrera::all();
 
     return view('unidadcurricular.index', compact('unidadcurricular', 'anios', 'carreras'));
 }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -58,26 +84,21 @@ class UnidadCurricularController extends Controller
         return redirect()->route('unidadcurricular.index')->with('success','Nueva Unidad Curricular Agregada');
     }
 
-    /**
-     * Display the specified resource.
-     * @param int
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show()
     {
-        $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(10);
+        $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(15);
+        $anios = Anio::all();
+        $carreras = Carrera::all();
         
-        return view('unidadcurricular.lista',compact('unidadcurricular'));
+        return view('unidadcurricular.lista', compact('unidadcurricular', 'anios', 'carreras'));
     }
+    
 
 
  
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit($id)
 {
     $unidadcurricular = UnidadCurricular::findOrFail($id);
@@ -88,11 +109,7 @@ class UnidadCurricularController extends Controller
 }
 
 
-    /**
-     * Update the specified resource in storage.
-     * @param int
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -109,11 +126,7 @@ class UnidadCurricularController extends Controller
         return redirect()->route('unidadcurricular.index')->with('success', 'Unidad Curricular Actualizada');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         $unidadcurricular = UnidadCurricular::find($id);

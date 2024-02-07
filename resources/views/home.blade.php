@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <p>Bienvenido al panel de administración de AdminLTE.</p>
+    <p>Bienvenido al panel de Usuarios.</p>
 
     @if(empty(auth()->user()->dni) || empty(auth()->user()->apellido))
         <div class="alert alert-warning" id="incomplete-profile-alert">

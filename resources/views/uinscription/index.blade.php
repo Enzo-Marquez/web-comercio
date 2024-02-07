@@ -8,10 +8,37 @@
                     <div class="card-header">
                         <h5 class="mb-0">Formulario de Inscripción</h5>
                     </div>
+
+
+<!-- Asegúrate de haber importado Carbon en la parte superior de tu archivo de vista -->
+@php
+    use Carbon\Carbon;
+@endphp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
+
+
+                             @if (session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                            @endif
 
                         <div class="row">
                             <!-- Información del Usuario -->
@@ -94,74 +121,111 @@
                             @endif
                         </div>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                   
 
-                        <!-- Formulario de Inscripción -->
-                        <form action="{{ route('uinscription.store') }}" method="POST">
-                            @csrf
-                            <!-- Otros campos similares a los de tu formulario de mesaexamens -->
-                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                            <input type="hidden" name="mesaexamen_id" value="{{ $mesa_id }}">
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Enviar Formulario de Inscripción</button>
-                            </div>
-                        </form>
+                    
 
-                        <!-- Botón y Modal para eliminar -->
-                        @if ($uinscription)
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $mesa_id]) }}">
-                                Eliminar
-                            </button>
-                        @endif
 
-                        <!-- Modal de Confirmación de Eliminación -->
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Está seguro de que desea eliminar esta inscripción?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <form id="deleteForm" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal"
+    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) > 10 ? 'disabled' : '' }}>
+    Enviar Formulario de Inscripción
+</button>
+
+
+
+
+<!-- Modal para el Formulario de Inscripción -->
+<div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="inscriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inscriptionModalLabel">Formulario de Inscripción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario de Inscripción -->
+                <form action="{{ route('uinscription.store') }}" method="POST" id="inscriptionForm">
+                    @csrf
+                    <!-- Otros campos similares a los de tu formulario de mesaexamens -->
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="mesaexamen_id" value="{{ $mesa_id }}">
+                    
+                    <!-- Otros campos del formulario -->
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheckbox" name="termsCheckbox" required>
+                            <label class="form-check-label" for="termsCheckbox">  Acepto los términos y condiciones. Al enviar este formulario, confirmo que he leído y estoy de acuerdo con los términos y condiciones establecidos para rendir esta asignatura.</label>
                         </div>
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="validateTerms()">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validateTerms() {
+        if (!document.getElementById('termsCheckbox').checked) {
+            alert('Debes aceptar los términos y condiciones.');
+        } else {
+            document.getElementById('inscriptionForm').submit();
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Botón y Modal para eliminar -->
+@if ($uinscription)
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
+        Eliminar Inscripción
+    </button>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea eliminar esta inscripción?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form id="deleteForm" method="POST" action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+@endif
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Manejo de clic en el botón de eliminar
-            $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var formAction = button.data('form-action');
-                $('#deleteForm').attr('action', formAction);
-            });
-        });
-    </script>
+
+
 @endsection

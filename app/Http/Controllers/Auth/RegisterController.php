@@ -35,7 +35,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // Cambia el tipo de usuario predeterminado a 'admin' temporalmente
-        $userType = UserType::Admin;
+        $userType = UserType::User;
 
         $user = User::create([
             'name' => $data['name'],

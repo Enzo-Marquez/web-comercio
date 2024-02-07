@@ -330,6 +330,26 @@ return [
             'label_color' => 'success',
         ],
 
+        [
+            'text'        => 'Ver Terminos y Condiciones Para Rendir',
+            'url'         => '/terminos',
+            'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'fas fa-info-circle',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Informacion y Fechas',
+            'url'         => '/infofechas',
+            'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'far fa-calendar-alt',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+
         // [
         //     'text'        => 'Inscribirme a una mesa',
         //     'url'         => '/',
@@ -349,31 +369,36 @@ return [
 
         [
             'text'    => 'Gestionar Mesas ',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-desktop',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             'submenu' => [
                 
                 [
                     'text' => 'Años',
                     'url'  => 'anios',
-                    'can'     => 'admin',
+                    'can'  => 'admin',
+                    'icon' => 'far fa-calendar-alt',
 
                 ],
                 [
                     'text' => 'Carreras',
                     'url'  => 'carreras',
+                    'icon' => 'fas fa-graduation-cap',
                 ],
                 [
                     'text' => 'Turnos',
                     'url'  => 'turnos',
+                    'icon' => 'far fa-clock',
                 ],
                 [
                     'text' => 'Unidad Curricular',
                     'url'  => 'unidadcurricular',
+                    'icon' => 'fas fa-book',
                 ],
                 [
                     'text' => 'Listas de Unidades Curriculares',
                     'url'  => 'unidadcurricular/listas',
+                    'icon' => 'fas fa-list-ol',
                 ],
         ],
     ],
@@ -420,7 +445,7 @@ return [
             'url'         => '/docentes',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-user-tie',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -431,7 +456,7 @@ return [
             'url'         => '/mesaexamens',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-calendar-plus',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -441,7 +466,7 @@ return [
             'url'         => '/mesaexamens/lista',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-tasks',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -450,7 +475,7 @@ return [
             'text'        => 'Inscripciones',
             'url'         => 'admin/carreras',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-address-card',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -463,6 +488,12 @@ return [
             'url'  => '/usuarios',
             'icon' => 'fas fa-fw fa-user',
         ],
+        // [
+        //     'text' => 'Roles',
+        //     'url'  => '/usuarios/roles',
+        //     'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
         // [
         //     'text' => 'Cambiar Contraseña',
         //     'url'  => 'admin/settings',

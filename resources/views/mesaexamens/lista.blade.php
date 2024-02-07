@@ -39,8 +39,42 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
+
+                    <div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- Agregar formulario de filtro -->
+        <form action="{{ route('mesaexamens.lista') }}" method="GET">
+            @csrf
+            <div class="mb-3">
+                <label for="filtro_anio" class="form-label">Filtrar por Año:</label>
+                <select class="form-select" id="filtro_anio" name="filtro_anio">
+                    <option value="">Todos los años</option>
+                    @foreach($anios as $anio)
+                        <option value="{{ $anio->id }}" {{ request('filtro_anio') == $anio->id ? 'selected' : '' }}>{{ $anio->description }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="filtro_carrera" class="form-label">Filtrar por Carrera:</label>
+                <select class="form-select" id="filtro_carrera" name="filtro_carrera">
+                    <option value="">Todas las carreras</option>
+                    @foreach($carreras as $carrera)
+                        <option value="{{ $carrera->id }}" {{ request('filtro_carrera') == $carrera->id ? 'selected' : '' }}>{{ $carrera->description }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+
+        <div class="col-md-12">
+            <!-- Resto del código de la vista -->
+        </div>
+    </div>
+</div>
+
+
                     <div class="table-container"> <!-- Contenedor con desplazamiento horizontal -->
-                        <table class="table table-bordered">
+                        <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th class="long-header">Carrera</th>
@@ -72,7 +106,7 @@
                                         <td>{{ $mesaexamen->vocal2->nom_doc }}</td>
                                         <td>
                                             <a href="{{ route('mesaexamens.edit', ['mesaexamen' => $mesaexamen->id]) }}" class="btn btn-primary">Editar</a>
-                                        
+                                       
                                         
                                             <!-- Botón Eliminar con Modal de Confirmación -->
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $mesaexamen->id }}">
@@ -119,5 +153,8 @@
         </div>
     </div>
 </div>
+
+ 
+
 
 @endsection

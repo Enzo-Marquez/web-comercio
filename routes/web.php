@@ -25,11 +25,13 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dashboard');
     });
 
+    
+
     Route::group(['middleware' => ['auth', 'admin']], function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::resource('roles', RolController::class);
-        
-        
+
+
     //TRUNOS//
         Route::get('/turnos', function () {
             return view('turnos.index');
@@ -63,6 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/anios{id}', [AniosController::class, 'destroy'])->name('anios-destroy');
     //FIN AÑOS//
 
+
+
+
     //INICIO UNIDAD CURRICULAR//
     Route::resource('unidadcurricular', UnidadCurricularController::class);
     Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'showLista'])->name('unidadcurricular.lista');
@@ -70,17 +75,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //FIN UNIDAD CURRICULAR//
-    });
-
-
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('usuarios', UsuarioController::class);
 
     // routes/web.php
 
 Route::resource('mesaexamens', MesaexamenController::class);
 Route::get('/mesaexamens/lista', [MesaexamenController::class, 'showLista'])->name('mesaexamens.lista');
 Route::patch('/mesaexamens/{mesaexamens}')->name('mesaexamens.update');
+
+Route::post('/get-unidades-curriculares', [MesaexamenController::class, 'getUnidadesCurriculares']);
 
 
 // Inicio Docentes
@@ -100,24 +102,9 @@ Route::delete('/docentes/{id}', [DocenteController::class, 'destroy'])->name('do
 // Fin Docentes
 
 
-Route::get('/usercarreras', [UsercarrerasController::class, 'index']);
-Route::get('/usercarreras/{id}', [UsercarrerasController::class, 'show']);
-Route::post('/usercarreras', [UsercarrerasController::class, 'store']);
-Route::put('/usercarreras/{id}', [UsercarrerasController::class, 'update']);
-Route::delete('/usercarreras/{id}', [UsercarrerasController::class, 'destroy']);
 
 
 
- // Rutas para UserCarreras
- Route::resource('usercarreras', UsercarrerasController::class);
-
-
-
- Route::get('/uinscription/{mesaexamen_id}', [UinscriptionController::class, 'index'])->name('uinscription.index');
- Route::post('/uinscription', [UinscriptionController::class, 'store'])->name('uinscription.store');
- Route::get('/uinscription/{id}', [UinscriptionController::class, 'show'])->name('uinscription.show');
- Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->name('uinscription.update');
- Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
  
 
 
@@ -132,6 +119,104 @@ Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidad
 
 Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
 
+Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
+
+
+
+
+
+
+
+
+
+
+}); // ↑ aqui arriba para rutas admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//VISTAS USUARIOS NO ADMINISTRADORES
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+// Ruta para mostrar la vista con la lista de carreras
+Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
+
+// Ruta para manejar la selección de carrera y mostrar las mesas de exámenes
+Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
+
+Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])
+    ->name('unidades_curriculares');
+
+Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
+
+Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Ruta para ver términos y condiciones
+Route::get('/terminos', function () {
+    return view('terminos');
+
+});
+// Ruta para la vista "infofechas"
+Route::get('/infofechas', function () {
+    return view('infofechas');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Ruta para mostrar la lista de usuarios
+Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::resource('usuarios', UsuarioController::class);
+
+// Ruta para usercarreras
+Route::resource('usercarreras', UsercarrerasController::class);
+
+
+// Rutas para inscripción a mesas de examen
+Route::get('/uinscription/{mesaexamen_id}', [UinscriptionController::class, 'index'])->name('uinscription.index');
+Route::post('/uinscription', [UinscriptionController::class, 'store'])->name('uinscription.store');
+Route::get('/uinscription/{id}', [UinscriptionController::class, 'show'])->name('uinscription.show');
+Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->name('uinscription.update');
+Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
 
     
 });

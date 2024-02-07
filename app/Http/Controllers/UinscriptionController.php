@@ -28,9 +28,22 @@ class UinscriptionController extends Controller
 
     // Asegúrate de que $usercarreras no esté vacío antes de continuar
     if ($usercarreras) {
+        // Obtén la lista de años disponibles
+        // ...
+
+        // Filtra las mesas de examen por año si se ha seleccionado uno
         $mesaexamens = Mesaexamen::with(['anio', 'unidadCurricular'])
             ->where('carreras_id', $carrera_id)
             ->get();
+
+        // Verifica si el usuario está inscrito en cada mesa de examen y agrega la información a la colección
+        foreach ($mesaexamens as $mesaexamen) {
+            $uinscription = Uinscription::where('user_id', Auth::id())
+                ->where('mesaexamen_id', $mesaexamen->id)
+                ->first();
+
+            $mesaexamen->isInscrito = $uinscription !== null; // BOTON VERDE DE INSCRIPTO
+        }
 
         return view('uinscription.unid', compact('mesaexamens'));
     } else {
@@ -38,6 +51,10 @@ class UinscriptionController extends Controller
         return view('uinscription.unid', ['mesaexamens' => []]);
     }
 }
+
+
+
+
 
     
 
@@ -159,10 +176,15 @@ public function index($mesaexamen_id)
         return redirect()->route('uinscription.index',['mesaexamen_id' => $mesaexamen_id])->with('error', 'Ya se inscribió a esta Mesa');
     }
 
+     // Verifica si el usuario tiene el perfil completo
+     $user = User::find($request->user_id);
+
+     if (!$user->dni || !$user->apellido) {
+         return redirect()->route('uinscription.index', ['mesaexamen_id' => $mesaexamen_id])->with('error', 'Completa tu perfil antes de inscribirte.');
+     }
     // Crear una nueva instancia de Uinscription y asignar valores
     $uinscription = new Uinscription($request->all());
     $uinscription->save();
-
 
 
     // Redirigir al índice con el parámetro mesaexamen_id

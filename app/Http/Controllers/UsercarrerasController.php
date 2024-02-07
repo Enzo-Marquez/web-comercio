@@ -38,7 +38,6 @@ public function create()
     // $users = User::all();
     $carreras = Carrera::all();
 
-    dd($carreras);  // Verifica si las carreras están llegando correctamente
 
     return view('usercarreras.create', compact('carreras'));
 }
@@ -141,16 +140,14 @@ public function show()
     return redirect()->route('usercarreras.index')->with('success', 'Carrera Actualizada');
 }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $usercarreras = Usercarrera::find($id);
-        $usercarreras->delete();
-        
-        return redirect()->route('usercarreras.index')->with('success', 'Carrera Eliminada');
-    }
+
+
+   public function destroy($id)
+{
+    $usercarreras = Usercarrera::find($id);
+    $usercarreras->delete();
+
+    return redirect()->route('usercarreras.index')->with('success', 'Carrera Eliminada');
+}
+
 }

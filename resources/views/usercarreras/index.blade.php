@@ -31,23 +31,30 @@
                     <div class="mt-3"></div>
 
                     <!-- Sección para mostrar las asignaciones existentes -->
-                    <div class="p-3">
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        @if (session('success'))
-                            <div class="alert alert-success">
+                            @if (session('success'))
+                                <div class="alert alert-success">
                                 {{ session('success') }}
-                            </div>
-                        @endif
+                                </div>
+                            @endif
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                <strong>Error:</strong> ¡Debes Seleccionar Una Carrera!
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                {{ session('error') }}
+                                </div>
+                            @endif
+
 
                         <table class="table table-bordered mt-3">
                             <thead>
                                 <tr>
                                     <th>Usuario</th>
+                                    <th>DNI</th>
                                     <th>Apellido</th>
                                     <th>Carrera</th>
                                     <th>Acciones</th>
@@ -57,6 +64,7 @@
                                 @foreach ($usercarreras as $usercarrera)
                                     <tr>
                                         <td>{{ $usercarrera->user->name ?? 'N/A' }}</td>
+                                        <td>{{ $usercarrera->user->dni ?? 'No Completado' }}</td>
                                         <td>{{ $usercarrera->user->apellido ?? 'No Completado' }}</td>
                                         <td>{{ $usercarrera->carrera ? $usercarrera->carrera->description : 'N/A' }}</td>
                                         <td>

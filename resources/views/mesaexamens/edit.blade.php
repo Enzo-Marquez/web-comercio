@@ -26,7 +26,7 @@
                         <div class="row mb-3">
                             <div class="col-sm-6">
                                 <label for="anios_id" class="form-label">Año</label>
-                                <select name="anios_id" class="form-select">
+                                <select id="anios" name="anios_id" class="form-select">
                                     @foreach ($anios as $anio)
                                         <option value="{{ $anio->id }}" {{ $mesaexamen->anios_id == $anio->id ? 'selected' : '' }}>
                                             {{ $anio->description }}
@@ -37,7 +37,7 @@
 
                             <div class="col-sm-6">
                                 <label for="carreras_id" class="form-label">Carrera</label>
-                                <select name="carreras_id" class="form-select">
+                                <select id="carrera" name="carreras_id" class="form-select">
                                     @foreach ($carreras as $carrera)
                                         <option value="{{ $carrera->id }}" {{ $mesaexamen->carreras_id == $carrera->id ? 'selected' : '' }}>
                                             {{ $carrera->description }}
@@ -50,14 +50,21 @@
                         <div class="row mb-3">
                             <div class="col-sm-6">
                                 <label for="unidad_curriculars_id" class="form-label">Unidad Curricular</label>
-                                <select name="unidad_curriculars_id" class="form-select">
+                                <select id="unidadcurricular" name="unidad_curriculars_id" class="form-select unidad-curricular-select">
                                     @foreach ($unidadCurriculars as $uc)
-                                        <option value="{{ $uc->id }}" {{ $mesaexamen->unidad_curriculars_id == $uc->id ? 'selected' : '' }}>
+                                        <option value="{{ $uc->id }}" {{ $mesaexamen->unidad_curriculars_id == $uc->id ? 'selected' : '' }}
+                                        data-carrera-id="{{ $uc->carrera->id }}"
+                                        data-anio-id="{{ $uc->anio->id }}">
                                             {{ $uc->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> 
+
+
+
+
+
 
                             <div class="col-sm-6">
                                 <label for="turnos_id" class="form-label">Turno</label>
@@ -91,7 +98,7 @@
 
                             <div class="col-sm-6">
                                 <label for="presidente_id" class="form-label">Presidente</label>
-                                <select name="presidente_id" class="form-select">
+                                <select name="presidente_id" class="presidente-select">
                                     @foreach ($docentes as $docente)
                                         <option value="{{ $docente->id }}" {{ $mesaexamen->presidente_id == $docente->id ? 'selected' : '' }}>
                                             {{ $docente->nom_doc }}
@@ -104,7 +111,7 @@
                         <div class="row mb-3">
                             <div class="col-sm-6">
                                 <label for="vocal_id" class="form-label">Vocal</label>
-                                <select name="vocal_id" class="form-select">
+                                <select name="vocal_id" class="vocal-select">
                                     @foreach ($docentes as $docente)
                                         <option value="{{ $docente->id }}" {{ $mesaexamen->vocal_id == $docente->id ? 'selected' : '' }}>
                                             {{ $docente->nom_doc }}
@@ -115,7 +122,7 @@
 
                             <div class="col-sm-6">
                                 <label for="vocal2_id" class="form-label">Vocal 2</label>
-                                <select name="vocal2_id" class="form-select">
+                                <select name="vocal2_id" class="vocal2-select">
                                     @foreach ($docentes as $docente)
                                         <option value="{{ $docente->id }}" {{ $mesaexamen->vocal2_id == $docente->id ? 'selected' : '' }}>
                                             {{ $docente->nom_doc }}
@@ -177,5 +184,44 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    
+$(document).ready(function() {
+            $('#carrera, #anios').change(function() {
+                var selectedCarrera = $('#carrera').find(':selected').val();
+                var selectedAnio = $('#anios').find(':selected').val();
+
+                $('#unidadcurricular option').hide();
+                $('#unidadcurricular option').filter(function() {
+                    var carreraId = $(this).data('carrera-id');
+                    var anioId = $(this).data('anio-id');
+
+                    return (carreraId == selectedCarrera && anioId == selectedAnio);
+                }).show();
+
+                $('#unidadcurricular').val(null);
+            });
+        });
+
+
+
+    </script>
+
+
+
+
+
+
+    <!-- Agrega aquí el script de Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar Select2 para los campos deseados
+            $('.presidente-select, .vocal-select, .vocal2-select').select2();
+        });
+    </script>
 
 @endsection

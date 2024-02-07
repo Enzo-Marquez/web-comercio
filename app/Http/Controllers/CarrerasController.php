@@ -29,7 +29,7 @@ class CarrerasController extends Controller
         return redirect()->route('carreras')->with('success', 'Carrera Agregada Correctamente');
     }
     public function index(){
-        $carreras = carrera::paginate(6); 
+        $carreras = carrera::orderBy('description', 'asc')->paginate(10);
         return view('carreras.index', ['carreras' => $carreras]);
     }
 

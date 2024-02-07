@@ -19,9 +19,21 @@ class DocenteController extends Controller
 
         return redirect()->route('docentes')->with('success', 'Docente Agregado Correctamente');
     }
-    public function index(){
-        $docente = Docente::paginate(4); 
-        return view('docentes.index', ['docentes' => $docente]);
+    
+
+
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Aplicar filtro solo si se proporciona un término de búsqueda
+        $docenteQuery = $search
+            ? Docente::where('nom_doc', 'LIKE', "%$search%")
+            : Docente::query();
+
+        $docentes = $docenteQuery->paginate(4);
+
+        return view('docentes.index', ['docentes' => $docentes, 'search' => $search]);
     }
 
     public function show($id){

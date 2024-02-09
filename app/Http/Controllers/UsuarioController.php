@@ -32,7 +32,7 @@ class UsuarioController extends Controller
     // Check if the user is an admin
     if ($usuarioAutenticado->user_type === 'admin') {
         // Si es un admin, obtener todos los usuarios
-        $usuarios = User::all();
+        $usuarios = User::orderBy('name', 'asc')->get();
     } else {
         // Si no es un admin, obtener solo su propio usuario
         $usuarios = User::where('id', $usuarioAutenticado->id)->get();

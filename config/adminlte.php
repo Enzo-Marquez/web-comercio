@@ -473,7 +473,7 @@ return [
 
         [
             'text'        => 'Inscripciones',
-            'url'         => 'admin/carreras',
+            'url'         => '/ainscription/lista',
             'can'     => 'admin', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             'icon'        => 'fas fa-address-card',
             // 'label'       => 4,

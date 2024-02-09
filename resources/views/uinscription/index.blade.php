@@ -220,7 +220,7 @@
                     <form id="deleteForm" method="POST" action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-danger"{{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) > 10 ? 'disabled' : '' }}>Eliminar</button>
                     </form>
                 </div>
             </div>

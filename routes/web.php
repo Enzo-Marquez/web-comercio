@@ -13,76 +13,82 @@ use App\Http\Controllers\MesaexamenController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\UsercarrerasController;
 use App\Http\Controllers\UinscriptionController;
+use App\Http\Controllers\AinscriptionController;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Miiddleware //
 Auth::routes();
 
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+  
+
+Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::resource('roles', RolController::class);
+
+
+// Para Abajo Rutas Protegidas // 
+
+
+//TRUNOS//
+    Route::get('/turnos', function () {
+        return view('turnos.index');
+})->name('turnos');
+Route::get('/turnos', [TurnosController::class, 'index'])->name('turnos');
+Route::post('/turnos', [TurnosController::class, 'store'])->name('turnos');
+Route::get('/turnos/{id}', [TurnosController::class, 'show'])->name('turnos-edit');
+Route::patch('/turnos/{id}', [TurnosController::class, 'update'])->name('turnos-update');
+Route::delete('/turnos{id}', [TurnosController::class, 'destroy'])->name('turnos-destroy');
+//FIN TURNOS//
+
+
+// CARRERAS //
+Route::get('/carreras', function () {
+        return view('carreras.index');
+})->name('carreras');
+Route::get('/carreras', [CarrerasController::class, 'index'])->name('carreras');
+Route::post('/carreras', [CarrerasController::class, 'store'])->name('carreras');
+Route::get('/carreras/{id}', [CarrerasController::class, 'show'])->name('carreras-edit');
+Route::patch('/carreras/{id}', [CarrerasController::class, 'update'])->name('carreras-update');
+Route::delete('/carreras{id}', [CarrerasController::class, 'destroy'])->name('carreras-destroy');
+//FIN CARRERAS//
+
+
+//INICIO AÑOS//
+Route::get('/anios', function () {
+ return view('anios.index');
+})->name('anios');
+Route::get('/anios', [AniosController::class, 'index'])->name('anios');
+Route::post('/anios', [AniosController::class, 'store'])->name('anios');
+Route::get('/anios/{id}', [AniosController::class, 'show'])->name('anios-edit');
+Route::patch('/anios/{id}', [AniosController::class, 'update'])->name('anios-update');
+Route::delete('/anios{id}', [AniosController::class, 'destroy'])->name('anios-destroy');
+//FIN AÑOS//
+
+
+//INICIO UNIDAD CURRICULAR//
+Route::resource('unidadcurricular', UnidadCurricularController::class);
+Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'showLista'])->name('unidadcurricular.lista');
+Route::get('/unidadcurricular/{unidadcurricular}/edit', [UnidadCurricularController::class, 'edit'])->name('unidadcurricular.edit');
+//FIN UNIDAD CURRICULAR//
 
     
-
-    Route::group(['middleware' => ['auth', 'admin']], function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-        Route::resource('roles', RolController::class);
-
-
-    //TRUNOS//
-        Route::get('/turnos', function () {
-            return view('turnos.index');
-        })->name('turnos');
-        Route::get('/turnos', [TurnosController::class, 'index'])->name('turnos');
-        Route::post('/turnos', [TurnosController::class, 'store'])->name('turnos');
-        Route::get('/turnos/{id}', [TurnosController::class, 'show'])->name('turnos-edit');
-        Route::patch('/turnos/{id}', [TurnosController::class, 'update'])->name('turnos-update');
-        Route::delete('/turnos{id}', [TurnosController::class, 'destroy'])->name('turnos-destroy');
-    //FIN TURNOS//
-
-    // CARRERAS //
-    Route::get('/carreras', function () {
-        return view('carreras.index');
-    })->name('carreras');
-    Route::get('/carreras', [CarrerasController::class, 'index'])->name('carreras');
-    Route::post('/carreras', [CarrerasController::class, 'store'])->name('carreras');
-    Route::get('/carreras/{id}', [CarrerasController::class, 'show'])->name('carreras-edit');
-    Route::patch('/carreras/{id}', [CarrerasController::class, 'update'])->name('carreras-update');
-    Route::delete('/carreras{id}', [CarrerasController::class, 'destroy'])->name('carreras-destroy');
-    //FIN CARRERAS//
-
-    //INICIO AÑOS//
-    Route::get('/anios', function () {
-        return view('anios.index');
-    })->name('anios');
-    Route::get('/anios', [AniosController::class, 'index'])->name('anios');
-    Route::post('/anios', [AniosController::class, 'store'])->name('anios');
-    Route::get('/anios/{id}', [AniosController::class, 'show'])->name('anios-edit');
-    Route::patch('/anios/{id}', [AniosController::class, 'update'])->name('anios-update');
-    Route::delete('/anios{id}', [AniosController::class, 'destroy'])->name('anios-destroy');
-    //FIN AÑOS//
-
-
-
-
-    //INICIO UNIDAD CURRICULAR//
-    Route::resource('unidadcurricular', UnidadCurricularController::class);
-    Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'showLista'])->name('unidadcurricular.lista');
-    Route::get('/unidadcurricular/{unidadcurricular}/edit', [UnidadCurricularController::class, 'edit'])->name('unidadcurricular.edit');
-
-
-    //FIN UNIDAD CURRICULAR//
-
-    // routes/web.php
-
+//Mesa de Examenes //
 Route::resource('mesaexamens', MesaexamenController::class);
 Route::get('/mesaexamens/lista', [MesaexamenController::class, 'showLista'])->name('mesaexamens.lista');
 Route::patch('/mesaexamens/{mesaexamens}')->name('mesaexamens.update');
-
 Route::post('/get-unidades-curriculares', [MesaexamenController::class, 'getUnidadesCurriculares']);
+//Fin Mesa de Examenes //
 
 
 // Inicio Docentes
@@ -95,39 +101,14 @@ Route::get('/docentes/{id}', [DocenteController::class, 'show'])->name('docentes
 Route::get('/docentes/{id}/edit', [DocenteController::class, 'edit'])->name('docentes-edit');
 Route::put('/docentes/{id}', [DocenteController::class, 'update'])->name('docentes-update');
 Route::delete('/docentes/{id}', [DocenteController::class, 'destroy'])->name('docentes-destroy');
+// Fin Docentes 
 
 
-
-
-// Fin Docentes
-
-
-
-
-
- 
-
-
-// Ruta para mostrar la vista con la lista de carreras
-Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
-
-// Ruta para manejar la selección de carrera y mostrar las mesas de exámenes
-Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
-
-Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])
-    ->name('unidades_curriculares');
-
-Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
-
-Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
-
-
-
-
-
-
-
-
+// Inicio Uinscription //
+Route::get('/ainscription', [AinscriptionController::class, 'index'])->name('ainscription.index');
+Route::post('/ainscription/filtrar', [AinscriptionController::class, 'filtrarCarreras'])->name('filtrarCarreras');
+Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->name('showForm');
+// Fin Uinscription //
 
 
 }); // ↑ aqui arriba para rutas admin
@@ -146,38 +127,17 @@ Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnid
 
 
 
-
-
+// Unidades Curriculares //
+Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
+Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
+Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
+Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
+Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
+// Fin Unidades Curriculares //
 
 
 //VISTAS USUARIOS NO ADMINISTRADORES
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-// Ruta para mostrar la vista con la lista de carreras
-Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
-
-// Ruta para manejar la selección de carrera y mostrar las mesas de exámenes
-Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
-
-Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])
-    ->name('unidades_curriculares');
-
-Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
-
-Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Ruta para ver términos y condiciones
@@ -185,27 +145,17 @@ Route::get('/terminos', function () {
     return view('terminos');
 
 });
+
+
 // Ruta para la vista "infofechas"
 Route::get('/infofechas', function () {
     return view('infofechas');
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // Ruta para mostrar la lista de usuarios
-Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::resource('usuarios', UsuarioController::class);
+
 
 // Ruta para usercarreras
 Route::resource('usercarreras', UsercarrerasController::class);

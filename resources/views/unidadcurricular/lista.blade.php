@@ -22,7 +22,9 @@
             @csrf
                 <label for="search">Buscar:</label>
                 <input type="text" class="form-control" name="search" id="search">
+                </div>
 
+                
         <div class="mb-3">
             <label for="anios_id" class="form-label">Año</label>
             <select name="anios_id" class="form-select">

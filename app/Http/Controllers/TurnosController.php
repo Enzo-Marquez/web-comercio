@@ -19,7 +19,7 @@ class TurnosController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'description' => 'required|min:3'
+            'description' => 'required'
         ]);
         
         $turno = new Turno;
@@ -28,10 +28,14 @@ class TurnosController extends Controller
 
         return redirect()->route('turnos')->with('success', 'Turno Agregado Correctamente');
     }
-    public function index(){
-        $turno = turno::paginate(4); 
-        return view('turnos.index', ['turnos' => $turno]);
+
+    public function index()
+    {
+        $turnos = Turno::orderBy('description', 'asc')->paginate(4);
+    
+        return view('turnos.index', ['turnos' => $turnos]);
     }
+    
 
     public function show($id){
         $turno = turno::find($id);

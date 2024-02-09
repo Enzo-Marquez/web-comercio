@@ -86,13 +86,18 @@ class UnidadCurricularController extends Controller
 
     
     public function show()
-    {
-        $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(15);
-        $anios = Anio::all();
-        $carreras = Carrera::all();
-        
-        return view('unidadcurricular.lista', compact('unidadcurricular', 'anios', 'carreras'));
-    }
+{
+    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')
+        ->orderBy('name', 'asc')
+        ->paginate(15);
+
+    $anios = Anio::all();
+    $carreras = Carrera::all();
+    
+    return view('unidadcurricular.lista', compact('unidadcurricular', 'anios', 'carreras'));
+}
+
+    
     
 
 

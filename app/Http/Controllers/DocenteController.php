@@ -25,13 +25,13 @@ class DocenteController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
         // Aplicar filtro solo si se proporciona un término de búsqueda
         $docenteQuery = $search
             ? Docente::where('nom_doc', 'LIKE', "%$search%")
             : Docente::query();
 
-        $docentes = $docenteQuery->paginate(4);
+        $docenteQuery->orderBy('nom_doc', 'asc');
+        $docentes = $docenteQuery->paginate(15);
 
         return view('docentes.index', ['docentes' => $docentes, 'search' => $search]);
     }

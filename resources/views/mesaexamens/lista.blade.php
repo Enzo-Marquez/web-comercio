@@ -34,6 +34,8 @@
                 <div class="card-header">
                     <h5 class="mb-0">Lista de Mesas de Examen</h5>
                 </div>
+
+                
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>

@@ -118,11 +118,9 @@ autoWidth: false,
 "language": {
             "lengthMenu": "Mostrar " + 
             `<select class="form-select form-select-sm">
+            <option value='5'>5</option>
             <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
-            <option value='-1'>Todos</option>
+            <option value='15'>15</option>
             </select>` + 
             " Registros por pagina",
     "zeroRecords": "Nada Encontrado - Disculpa",

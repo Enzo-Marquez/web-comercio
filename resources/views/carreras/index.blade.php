@@ -39,7 +39,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Carrera</th>
+                            <th scope="col">Carreras</th>
                             <th scope="col" class="text-end">Acciones</th>
                         </tr>
                     </thead>

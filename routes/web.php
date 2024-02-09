@@ -88,6 +88,10 @@ Route::resource('mesaexamens', MesaexamenController::class);
 Route::get('/mesaexamens/lista', [MesaexamenController::class, 'showLista'])->name('mesaexamens.lista');
 Route::patch('/mesaexamens/{mesaexamens}')->name('mesaexamens.update');
 Route::post('/get-unidades-curriculares', [MesaexamenController::class, 'getUnidadesCurriculares']);
+Route::post('/mesaexamens/filter2', [MesaexamenController::class, 'filter2'])->name('mesaexamens.filter2');
+
+
+
 //Fin Mesa de Examenes //
 
 

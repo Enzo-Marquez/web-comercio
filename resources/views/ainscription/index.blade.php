@@ -30,7 +30,9 @@
                             <thead>
                                 <tr>
                                     <th class="long-header">Numero De Inscricpion</th>
-                                    <th>Usuario</th>
+                                    <th>Alumno</th>
+                                    <th>Dni Alumno</th>
+                                    <th>Correo Alumno</th>
                                     <th>Año</th>
                                     <th>Carrera - Asignatura</th>
                                     <th>Turno</th>
@@ -45,6 +47,20 @@
                                         <td>
                                             @if ($uinscription->usuario)
                                                 {{ $uinscription->usuario->name }} {{ $uinscription->usuario->apellido }}
+                                            @else
+                                                Usuario no disponible
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($uinscription->usuario)
+                                                {{ $uinscription->usuario->dni }}
+                                            @else
+                                                Usuario no disponible
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($uinscription->usuario)
+                                                {{ $uinscription->usuario->email }}
                                             @else
                                                 Usuario no disponible
                                             @endif
@@ -101,11 +117,9 @@ autoWidth: false,
 "language": {
             "lengthMenu": "Mostrar " + 
             `<select class="form-select form-select-sm">
+            <option value='5'>5</option>
             <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
-            <option value='-1'>Todos</option>
+            <option value='15'>15</option>
             </select>` + 
             " Registros por pagina",
     "zeroRecords": "Nada Encontrado - Disculpa",

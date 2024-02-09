@@ -13,16 +13,57 @@ use Illuminate\Pagination\Paginator;
 
 class MesaexamenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+
+
+
+    public function filter2(Request $request)
+{
+    Paginator::useBootstrap();
+
+    $query = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'presidente', 'vocal', 'vocal2');
+
+    if ($request->filled('anios_id')) {
+        $query->whereHas('anio', function ($q) use ($request) {
+            $q->where('id', $request->anios_id);
+        });
+    }
+
+    if ($request->filled('carrera_id')) {
+        $query->whereHas('carrera', function ($q) use ($request) {
+            $q->where('id', $request->carrera_id);
+        });
+    }
+
+    $mesasexamenes = $query->get();
+    $anios = Anio::all();
+    $carreras = Carrera::all();
+
+    // Asegúrate de pasar $mesasexamenes a la vista
+    return view('mesaexamens.lista', compact('mesasexamenes', 'anios', 'carreras'));
+}
+
+    
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
     public function index()
     {
         Paginator::useBootstrap();
 
-        $mesasexamenes = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'usuario')->paginate(6);
+        $mesasexamenes = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'usuario')->get();
         $carreras = Carrera::all();
         $anios = Anio::all();
         $unidadcurricular = UnidadCurricular::all();
@@ -140,7 +181,7 @@ class MesaexamenController extends Controller
         });
     }
 
-    $mesasexamenes = $query->paginate(10);
+    $mesasexamenes = $query->get();
     $anios = Anio::all(); // Asegúrate de obtener los años necesarios aquí
     $carreras = Carrera::all(); // Asegúrate de obtener las carreras necesarias aquí
 

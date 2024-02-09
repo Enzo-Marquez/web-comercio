@@ -3,7 +3,7 @@
 @section('content')
     <div>
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div>
                 <div class="card">
                     <div class="card-header">Términos y Condiciones para Rendir una Asignatura</div>
 

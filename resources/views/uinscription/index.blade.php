@@ -1,9 +1,9 @@
 @extends('app')
 
 @section('content')
-    <div class="container mt-4">
+    <div>
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div>
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Formulario de Inscripción</h5>
@@ -131,7 +131,7 @@
 
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal"
-    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) > 10 ? 'disabled' : '' }}>
+    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}>
     Enviar Formulario de Inscripción
 </button>
 
@@ -199,9 +199,11 @@
 
 <!-- Botón y Modal para eliminar -->
 @if ($uinscription)
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
-        Eliminar Inscripción
-    </button>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}"
+    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}>
+    Eliminar Inscripción
+</button>
+
 
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -221,7 +223,7 @@
                     <form id="deleteForm" method="POST" action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger"{{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) > 10 ? 'disabled' : '' }}>Eliminar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </div>
             </div>

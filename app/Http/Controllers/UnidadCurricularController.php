@@ -27,7 +27,7 @@ class UnidadCurricularController extends Controller
         }
 
     
-        $unidadcurricular = $query->paginate(15);
+        $unidadcurricular = $query->get();
         $anios = Anio::all();
         $carreras = Carrera::all();
     
@@ -48,7 +48,7 @@ class UnidadCurricularController extends Controller
 {
     Paginator::useBootstrap();
 
-    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->paginate(15);
+    $unidadcurricular = UnidadCurricular::with('anio', 'carrera')->get();
     $anios = Anio::all();
     $carreras = Carrera::all();
 
@@ -89,7 +89,7 @@ class UnidadCurricularController extends Controller
 {
     $unidadcurricular = UnidadCurricular::with('anio', 'carrera')
         ->orderBy('name', 'asc')
-        ->paginate(15);
+        ->get();
 
     $anios = Anio::all();
     $carreras = Carrera::all();

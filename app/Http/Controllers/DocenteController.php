@@ -31,7 +31,8 @@ class DocenteController extends Controller
             : Docente::query();
 
         $docenteQuery->orderBy('nom_doc', 'asc');
-        $docentes = $docenteQuery->paginate(15);
+        $docentes = $docenteQuery->get();
+
 
         return view('docentes.index', ['docentes' => $docentes, 'search' => $search]);
     }

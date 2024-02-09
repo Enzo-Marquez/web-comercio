@@ -10,22 +10,53 @@
  
 </div>
 </div>
-<div class="row justify-content-center">
+<div>
+    <div class="row justify-content-center">
         <div>
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Lista de Mesas de Examen</h5>
+                    <h5 class="mb-0">Lista de Mesas de Examenes</h5>
+
+
 
                 </div>
-
-                
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
+                    {{-- <div class="mb-3">
+        <form action="{{ route('unidadcurricular.filter') }}" method="GET">
+            @csrf
+                <label for="search">Buscar:</label>
+                <input type="text" class="form-control" name="search" id="search">
+                </div> --}}
+        <form action="{{ route('mesaexamens.filter2') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="anios_id" class="form-label">Año</label>
+            <select name="anios_id" class="form-select">
+                <option value="">Todas los años</option>
+                @foreach ($anios as $anio)
+                    <option value="{{ $anio->id }}" {{ request('anios_id') == $anio->id ? 'selected' : '' }}>{{ $anio->description }}</option>
+                @endforeach
+            </select>
+        </div>
 
-                    <div>
+        <div class="mb-3">
+            <label for="carrera_id" class="form-label">Carrera</label>
+            <select name="carrera_id" class="form-select">
+                <option value="">Todas las carreras</option>
+                @foreach ($carreras as $carrera)
+                    <option value="{{ $carrera->id }}" {{ request('carrera_id') == $carrera->id ? 'selected' : '' }}>{{ $carrera->description }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+      </form>
+</div>
+</div>
     {{-- <div class="row justify-content-center">
         <!-- Agregar formulario de filtro -->
         <form action="{{ route('mesaexamens.lista') }}" method="GET">
@@ -145,11 +176,9 @@ autoWidth: false,
 "language": {
             "lengthMenu": "Mostrar " + 
             `<select class="form-select form-select-sm">
+            <option value='5'>5</option>
             <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
-            <option value='-1'>Todos</option>
+            <option value='15'>15</option>
             </select>` + 
             " Registros por pagina",
     "zeroRecords": "Nada Encontrado - Disculpa",

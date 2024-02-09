@@ -136,7 +136,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <h5></h5>
-                            <a href="{{ url('mesaexamens\lista.blade.php') }}" class="btn btn-secondary">Ver Lista</a>
+                            <a href="{{ url('mesaexamens\lista') }}" class="btn btn-secondary">Ver Lista</a>
                         </div>
                     </div>
                 </div>

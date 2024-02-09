@@ -54,7 +54,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Crear Unidad Curricular</button>
-                        <a href="{{ url('unidadcurricular\lista.blade.php') }}" class="btn btn-secondary">Ir a la Lista de Unidades Curriculares</a>
+                        <a href="{{ url('unidadcurricular\listas') }}" class="btn btn-secondary">Ir a la Lista de Unidades Curriculares</a>
                     </form>
                 </div>
             </div>

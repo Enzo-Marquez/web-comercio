@@ -55,7 +55,7 @@ public function filtrarCarreras(Request $request)
         });
     }
 
-    $uinscriptions = $uinscriptions->paginate(15);
+    $uinscriptions = $uinscriptions->get();
     $anios = Anio::all();
     $carreras = Carrera::all();
     

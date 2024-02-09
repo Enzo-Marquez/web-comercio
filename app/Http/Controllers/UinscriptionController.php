@@ -34,13 +34,14 @@ class UinscriptionController extends Controller
         // Filtra las mesas de examen por año si se ha seleccionado uno
         $mesaexamens = Mesaexamen::with(['anio', 'unidadCurricular'])
             ->where('carreras_id', $carrera_id)
-            ->get();
+            ->paginate(15);
 
         // Verifica si el usuario está inscrito en cada mesa de examen y agrega la información a la colección
         foreach ($mesaexamens as $mesaexamen) {
             $uinscription = Uinscription::where('user_id', Auth::id())
                 ->where('mesaexamen_id', $mesaexamen->id)
                 ->first();
+
 
             $mesaexamen->isInscrito = $uinscription !== null; // BOTON VERDE DE INSCRIPTO
         }

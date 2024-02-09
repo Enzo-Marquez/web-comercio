@@ -1,25 +1,30 @@
 @extends('app')
 
 @section('content')
-    <h1>Unidades Curriculares</h1>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <h1 class="text-center">Mesas de Examenes</h1>
      
         
-        <form action="{{ route('unidades-curriculares.filter') }}" method="GET" class="mb-3">
+        {{-- <form action="{{ route('unidades-curriculares.filter') }}" method="GET" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Buscar Asignatura...">
         <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
-</form>
+</form> --}}
 
-    
-        
+    <div>
+      </div>  
 
-    <table class="table table-bordered" id="listaConsulta">
+    <table class="table table-bordered" id="asd">
         <thead>
             <tr>
                 <th>Año</th>
                 <th>Unidad Curricular</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +32,7 @@
                 <tr>
                     <td>{{ $mesaexamen->anio->description }}</td>
                     <td>{{ $mesaexamen->unidadCurricular->name }}</td>
-                    <td>
+                    <th class="text-end">
     @php
         $btnClass = $mesaexamen->isInscrito ? 'btn btn-success' : 'btn btn-info';
         $btnText = $mesaexamen->isInscrito ? 'Inscripto' : 'Inscribirse';
@@ -91,4 +96,34 @@
 });
 
 </script> --}}
+<script defer src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script defer src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+$('#asd').DataTable({
+responsive: true,
+autoWidth: false,
+
+"language": {
+            "lengthMenu": "Mostrar " + 
+            `<select class="form-select form-select-sm">
+            <option value='5'>5</option>
+            <option value='10'>10</option>
+            <option value='15'>15</option>
+            </select>` + 
+            " Registros por pagina",
+    "zeroRecords": "Nada Encontrado - Disculpa",
+    "info": "Mostrando la Pagina _PAGE_ De _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+    'search': 'Buscar:',
+    'paginate':{
+        'next': 'Siguiente',
+        'previous': 'Anterior'
+            }
+        }
+    } );
+</script>
+
 @endsection

@@ -4,8 +4,13 @@
     <h1>Unidades Curriculares</h1>
      
         
-        <label for="search">Buscar:</label>
-        <input type="text" class="form-control" name="search" id="search">
+        <form action="{{ route('unidades-curriculares.filter') }}" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Buscar Asignatura...">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+</form>
+
     
         
 
@@ -40,9 +45,9 @@
             @endforelse
         </tbody>
     </table>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
 
-    <script>
+    {{-- <script>
 
    $(document).ready(function() {
         var inputElement = document.getElementById("search");
@@ -85,5 +90,5 @@
 
 });
 
-</script>
+</script> --}}
 @endsection

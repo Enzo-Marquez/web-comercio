@@ -128,12 +128,17 @@
                     
 
 
-
+@if(isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10)
+    <div class="alert alert-warning mt-3">
+        El tiempo límite de inscripción ha pasado. Ya no es posible Inscribirse o Eliminarse de la Mesa.
+    </div>
+@endif
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal"
     {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}>
     Enviar Formulario de Inscripción
 </button>
+
 
 
 

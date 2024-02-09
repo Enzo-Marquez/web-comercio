@@ -131,13 +131,29 @@ Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->
 
 
 
-// Unidades Curriculares //
+// Rutas para Filtrar la mesa de Examen //
+
 Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
+
+// Ruta para el primer filtro
 Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
+
 Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
-Route::post('/unidades_curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
-Route::get('/unidadcurricular/filter', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidadcurricular.filter');
-// Fin Unidades Curriculares //
+Route::get('/unidades-curriculares/filter', [UinscriptionController::class, 'filterUnidadesCurriculares'])->name('unidades-curriculares.filter');
+
+Route::post('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
+
+
+
+
+
+// Rutas para inscripción a mesas de examen
+Route::get('/uinscription/{mesaexamen_id}', [UinscriptionController::class, 'index'])->name('uinscription.index');
+Route::post('/uinscription', [UinscriptionController::class, 'store'])->name('uinscription.store');
+Route::get('/uinscription/{id}', [UinscriptionController::class, 'show'])->name('uinscription.show');
+Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->name('uinscription.update');
+Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
+
 
 
 //VISTAS USUARIOS NO ADMINISTRADORES
@@ -163,14 +179,6 @@ Route::resource('usuarios', UsuarioController::class);
 
 // Ruta para usercarreras
 Route::resource('usercarreras', UsercarrerasController::class);
-
-
-// Rutas para inscripción a mesas de examen
-Route::get('/uinscription/{mesaexamen_id}', [UinscriptionController::class, 'index'])->name('uinscription.index');
-Route::post('/uinscription', [UinscriptionController::class, 'store'])->name('uinscription.store');
-Route::get('/uinscription/{id}', [UinscriptionController::class, 'show'])->name('uinscription.show');
-Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->name('uinscription.update');
-Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
 
     
 });

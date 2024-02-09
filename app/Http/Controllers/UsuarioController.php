@@ -21,28 +21,43 @@ class UsuarioController extends Controller
 
 
 
-    public function index()
-{
-    // Obtener el usuario autenticado
-    $usuarioAutenticado = Auth::user();
+    public function index(Request $request)
+    {
+        // Obtener el usuario autenticado
+        $usuarioAutenticado = Auth::user();
+    
+        // Inicializar la variable para almacenar los usuarios
+        $usuarios = null;
+    
+        // Verificar si el usuario es un admin
+        if ($usuarioAutenticado->user_type === 'admin') {
+            // Si es un admin, obtener todos los usuarios
+            $usuarios = User::orderBy('name', 'asc');
+        } else {
+            // Si no es un admin, obtener solo su propio usuario
+            $usuarios = User::where('id', $usuarioAutenticado->id);
+        }
+    
+        $search = $request->input('search');
+    
+        // Aplicar filtro solo si se proporciona un término de búsqueda
+        if ($search) {
+            $usuarios = $usuarios->where('name', 'LIKE', "%$search%");
+        }
+    
+        // Obtener los resultados finales
+        $usuarios = $usuarios->paginate(10);
+    
+        return view('usuarios.index', ['usuarios' => $usuarios, 'usuarioAutenticado' => $usuarioAutenticado, 'search' => $search]);
 
-    // Inicializar la variable para almacenar los usuarios
-    $usuarios = null;
-
-    // Check if the user is an admin
-    if ($usuarioAutenticado->user_type === 'admin') {
-        // Si es un admin, obtener todos los usuarios
-        $usuarios = User::orderBy('name', 'asc')->get();
-    } else {
-        // Si no es un admin, obtener solo su propio usuario
-        $usuarios = User::where('id', $usuarioAutenticado->id)->get();
     }
+    
 
-    return view('usuarios.index', compact('usuarios'));
+
+public function store(Request $request)
+{
+
 }
-
-
-
 
 
 

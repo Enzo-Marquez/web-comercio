@@ -56,7 +56,33 @@ class UinscriptionController extends Controller
 
 
 
-    
+public function filterUnidadesCurriculares(Request $request)
+{
+    // Obtener el término de búsqueda desde la solicitud
+    $searchTerm = $request->input('search');
+
+    // Filtrar las mesas de examen según el término de búsqueda
+    $mesaexamens = Mesaexamen::with(['anio', 'unidadCurricular'])
+        ->whereHas('unidadCurricular', function ($query) use ($searchTerm) {
+            $query->where('name', 'LIKE', "%$searchTerm%");
+        })
+        ->get();
+
+
+    // Verificar si el usuario está inscrito en cada mesa de examen y agregar la información a la colección
+    foreach ($mesaexamens as $mesaexamen) {
+        $uinscription = Uinscription::where('user_id', Auth::id())
+            ->where('mesaexamen_id', $mesaexamen->id)
+            ->first();
+
+        $mesaexamen->isInscrito = $uinscription !== null; // BOTON VERDE DE INSCRIPTO
+    }
+
+    // Puedes personalizar este retorno según tus necesidades
+    return view('uinscription.unid', compact('mesaexamens', 'searchTerm'));
+}
+
+
 
 
 

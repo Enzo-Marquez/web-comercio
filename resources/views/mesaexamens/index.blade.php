@@ -1,9 +1,9 @@
 @extends('app')
 
 @section('content')
-    <div class="container mt-4">
+    <div>
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div>
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Formulario de Mesa de Examen</h5>
@@ -135,7 +135,7 @@
                         </form>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5>Mesas de Examen Agregadas</h5>
+                            <h5></h5>
                             <a href="{{ url('mesaexamens\lista.blade.php') }}" class="btn btn-secondary">Ver Lista</a>
                         </div>
                     </div>

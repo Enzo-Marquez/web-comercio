@@ -94,12 +94,13 @@
                                         </tr>
                                         <tr>
                                             <th>Primer Llamado</th>
-                                            <td>{{ $mesaexamens->llamado }}</td>
-                                        </tr>
-                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($mesaexamens->llamado)->format('d/m/Y') }}</td>
+                                            </tr>
+                                            <tr>
                                             <th>Segundo Llamado</th>
-                                            <td>{{ $mesaexamens->llamado2 }}</td>
-                                        </tr>
+                                            <td>{{ \Carbon\Carbon::parse($mesaexamens->llamado2)->format('d/m/Y') }}</td>
+                                            </tr>
+
                                         <tr>
                                             <th>Hora</th>
                                             <td>{{ $mesaexamens->hora }}</td>

@@ -2,37 +2,20 @@
 
 @section('content')
 
-<style>
-    .table th,
-    .table td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    .table th {
-        text-align: center;
-    }
-
-    .table th.long-header {
-        white-space: normal;
-    }
-
-    .table-container {
-        overflow-x: auto; /* Agrega desplazamiento horizontal cuando la tabla es demasiado ancha */
-    }
-
-    .table tbody tr {
-        margin-bottom: 10px;
-    }
-</style>
-
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+<div>
+    
+ 
+</div>
+</div>
+<div class="row justify-content-center">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Lista de Mesas de Examen</h5>
+
                 </div>
 
                 
@@ -42,8 +25,8 @@
                     @endif
 
 
-                    <div class="container mt-4">
-    <div class="row justify-content-center">
+                    <div>
+    {{-- <div class="row justify-content-center">
         <!-- Agregar formulario de filtro -->
         <form action="{{ route('mesaexamens.lista') }}" method="GET">
             @csrf
@@ -68,15 +51,12 @@
             <button type="submit" class="btn btn-primary">Filtrar</button>
         </form>
 
-        <div class="col-md-12">
-            <!-- Resto del código de la vista -->
-        </div>
-    </div>
+    </div> --}}
 </div>
 
 
                     <div class="table-container"> <!-- Contenedor con desplazamiento horizontal -->
-                        <table class="table table-sm table-bordered">
+                        <table id="asd" class="table table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th class="long-header">Carrera</th>
@@ -101,17 +81,17 @@
                                         <td>{{ $mesaexamen->unidadCurricular->name }}</td>
                                         <td>{{ $mesaexamen->turno->description }}</td>
                                         <td>{{ $mesaexamen->hora }}</td>
-                                        <td>{{ $mesaexamen->llamado }}</td>
-                                        <td>{{ $mesaexamen->llamado2 }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($mesaexamen->llamado)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($mesaexamen->llamado2)->format('d/m/Y') }}</td>
                                         <td>{{ $mesaexamen->presidente->nom_doc }}</td>
                                         <td>{{ $mesaexamen->vocal->nom_doc }}</td>
                                         <td>{{ $mesaexamen->vocal2->nom_doc }}</td>
                                         <td>
-                                            <a href="{{ route('mesaexamens.edit', ['mesaexamen' => $mesaexamen->id]) }}" class="btn btn-primary">Editar</a>
+                                            <a href="{{ route('mesaexamens.edit', ['mesaexamen' => $mesaexamen->id]) }}" class="btn btn-primary btn-sm">Editar</a>
                                        
                                         
                                             <!-- Botón Eliminar con Modal de Confirmación -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $mesaexamen->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $mesaexamen->id }}">
                                                 Eliminar
                                             </button>
                                             </td>
@@ -145,18 +125,45 @@
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <br>
-                        <br>
-                        <a href="{{ route('mesaexamens.index') }}" class="btn btn-primary">Agregar Mesa de Examen</a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="text-center">
+                        <a href="{{ route('mesaexamens.index') }}" class="btn btn-primary">Agregar Mesa de Examen</a>
+                    </div>
+ <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$('#asd').DataTable({
+responsive: true,
+autoWidth: false,
 
- 
+"language": {
+            "lengthMenu": "Mostrar " + 
+            `<select class="form-select form-select-sm">
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+            <option value='100'>100</option>
+            <option value='-1'>Todos</option>
+            </select>` + 
+            " Registros por pagina",
+    "zeroRecords": "Nada Encontrado - Disculpa",
+    "info": "Mostrando la Pagina _PAGE_ De _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+    'search': 'Buscar:',
+    'paginate':{
+        'next': 'Siguiente',
+        'previous': 'Anterior'
+            }
+        }
+    } );
+</script>
 
 
 @endsection

@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container mt-4">
+<div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Actualizar Carrera</h5>

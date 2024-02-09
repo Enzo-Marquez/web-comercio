@@ -2,9 +2,13 @@
 
 @section('content')
 
-<div class="container mt-4">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+
+<div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Formulario de Docentes</h5>
@@ -38,16 +42,16 @@
                 </div>
             </div>
 
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <form action="{{ route('docentes') }}" method="GET" class="mb-3">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Buscar docentes...">
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
-                </form>
+                </form> --}}
 
             <div class="mt-4">
-                <table class="table table-bordered">
+                <table id="asd" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -97,46 +101,40 @@
                 </table>
 
                 <!-- Paginación -->
-                <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {{-- Anterior --}}
-                            @if ($docentes->onFirstPage())
-                                <li class="page-item disabled">
-                                    <span class="page-link">Anterior</span>
-                                </li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $docentes->previousPageUrl() }}" aria-label="Anterior">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                            @endif
-
-                            {{-- Números de página --}}
-                            @for ($i = 1; $i <= $docentes->lastPage(); $i++)
-                                <li class="page-item {{ $docentes->currentPage() == $i ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $docentes->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-
-                            {{-- Siguiente --}}
-                            @if ($docentes->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $docentes->nextPageUrl() }}" aria-label="Siguiente">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link">Siguiente</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
-                </div>
+                
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$('#asd').DataTable({
+responsive: true,
+autoWidth: false,
+
+"language": {
+            "lengthMenu": "Mostrar " + 
+            `<select class="form-select form-select-sm">
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+            <option value='100'>100</option>
+            <option value='-1'>Todos</option>
+            </select>` + 
+            " Registros por pagina",
+    "zeroRecords": "Nada Encontrado - Disculpa",
+    "info": "Mostrando la Pagina _PAGE_ De _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+    'search': 'Buscar:',
+    'paginate':{
+        'next': 'Siguiente',
+        'previous': 'Anterior'
+            }
+        }
+    } );
+</script>
 @endsection

@@ -65,7 +65,7 @@ class UnidadCurricularController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:unidad_curriculars|max:255',
+            'name' => 'required|max:255',
             'anios_id' => 'required|exists:anios,id',
             'carreras_id' => 'required|exists:carreras,id',
             

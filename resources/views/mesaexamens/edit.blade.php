@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container mt-4">
+<div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Actualizar Mesa de Examenes</h5>
@@ -134,7 +134,7 @@
 
                         <!-- Botones con modales -->
                         <div class="row mb-3">
-                            <div class="col-sm-10 offset-sm-2">
+                            <div class="text-end">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmUpdateModal">Actualizar Mesa de Examenes</button>
                                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#confirmBackModal">Volver</button>
                             </div>

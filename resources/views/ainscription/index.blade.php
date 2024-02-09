@@ -2,34 +2,11 @@
 
 @section('content')
 
-<style>
-    .table th,
-    .table td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .table th {
-        text-align: center;
-    }
-
-    .table th.long-header {
-        white-space: normal;
-    }
-
-    .table-container {
-        overflow-x: auto; /* Agrega desplazamiento horizontal cuando la tabla es demasiado ancha */
-    }
-
-    .table tbody tr {
-        margin-bottom: 10px;
-    }
-</style>
-
-<div class="container mt-4">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<div>
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Lista de Inscripciones</h5>
@@ -49,7 +26,7 @@
                     </div>
 
                     <div class="table-container"> <!-- Contenedor con desplazamiento horizontal -->
-                        <table class="table table-sm table-bordered">
+                        <table id="asd" class="table table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th class="long-header">Numero De Inscricpion</th>
@@ -113,4 +90,34 @@
     <br>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$('#asd').DataTable({
+responsive: true,
+autoWidth: false,
+
+"language": {
+            "lengthMenu": "Mostrar " + 
+            `<select class="form-select form-select-sm">
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+            <option value='100'>100</option>
+            <option value='-1'>Todos</option>
+            </select>` + 
+            " Registros por pagina",
+    "zeroRecords": "Nada Encontrado - Disculpa",
+    "info": "Mostrando la Pagina _PAGE_ De _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+    'search': 'Buscar:',
+    'paginate':{
+        'next': 'Siguiente',
+        'previous': 'Anterior'
+            }
+        }
+    } );
+</script>
 @endsection

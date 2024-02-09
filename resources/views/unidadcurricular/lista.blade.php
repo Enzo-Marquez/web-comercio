@@ -2,29 +2,32 @@
 
 @section('content')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
 
-<div class="container mt-4">
+<div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Lista de Unidades Curriculares</h5>
+
+
+
                 </div>
                 <div class="card-body">
-                    <!-- Mostrar mensaje de éxito si existe -->
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
         <form action="{{ route('unidadcurricular.filter') }}" method="GET">
             @csrf
                 <label for="search">Buscar:</label>
                 <input type="text" class="form-control" name="search" id="search">
-                </div>
-
-                
+                </div> --}}
+        <form action="{{ route('unidadcurricular.filter') }}" method="GET">
         <div class="mb-3">
             <label for="anios_id" class="form-label">Año</label>
             <select name="anios_id" class="form-select">
@@ -46,14 +49,13 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Filtrar</button>
-    </form>
+      </form>
 </div>
-
-<div class="container">
+</div>
 
 
                     <div class="mt-4">
-                        <table class="table table-sm table-bordered">
+                        <table id="asd" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
@@ -72,15 +74,14 @@
                 <td>{{ $unidad->name }}</td>
                 <td>{{ optional($unidad->anio)->description }}</td>
                 <td>{{ optional($unidad->carrera)->description }}</td>
-                <td>
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('unidadcurricular.edit', ['unidadcurricular' => $unidad->id]) }}" class="btn btn-primary">Editar</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal{{ $unidad->id }}">
+                <td class="text-end">
+                <a href="{{ route('unidadcurricular.edit', ['unidadcurricular' => $unidad->id]) }}" class="btn btn-primary btn-sm">Editar
+                </a>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal{{ $unidad->id }}">
                     Eliminar
                 </button>
-            </div>
-        </td>
-    </tr>
+                </td>
+            </tr>
 
                                     <!-- Modal (Eliminación) -->
 <div class="modal fade" id="modal{{ $unidad->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,55 +112,16 @@
                             </tbody>
                         </table>
                     </div>
-<a href="{{ route('unidadcurricular.index') }}" class="btn btn-primary">Agregar Unidad Curricular</a>
-
-                    
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="text-center">
+<a href="{{ route('unidadcurricular.index') }}" class="btn btn-primary">Agregar Unidad Curricular</a>
+<div>
 </div>
 
-<!-- Paginación -->
-<div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {{-- Anterior --}}
-            @if ($unidadcurricular->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">Anterior</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $unidadcurricular->previousPageUrl() }}" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            @endif
-
-            {{-- Números de página --}}
-            @for ($i = 1; $i <= $unidadcurricular->lastPage(); $i++)
-                <li class="page-item {{ $unidadcurricular->currentPage() == $i ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $unidadcurricular->url($i) }}">{{ $i }}</a>
-                </li>
-            @endfor
-
-            {{-- Siguiente --}}
-            @if ($unidadcurricular->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $unidadcurricular->nextPageUrl() }}" aria-label="Siguiente">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">Siguiente</span>
-                </li>
-            @endif
-        </ul>
-    </nav>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -223,5 +185,37 @@
             });
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$('#asd').DataTable({
+responsive: true,
+autoWidth: false,
+
+"language": {
+            "lengthMenu": "Mostrar " + 
+            `<select class="form-select form-select-sm">
+            <option value='10'>10</option>
+            <option value='25'>25</option>
+            <option value='50'>50</option>
+            <option value='100'>100</option>
+            <option value='-1'>Todos</option>
+            </select>` + 
+            " Registros por pagina",
+    "zeroRecords": "Nada Encontrado - Disculpa",
+    "info": "Mostrando la Pagina _PAGE_ De _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+    'search': 'Buscar:',
+    'paginate':{
+        'next': 'Siguiente',
+        'previous': 'Anterior'
+            }
+        }
+    } );
+</script>
+
 
 @endsection

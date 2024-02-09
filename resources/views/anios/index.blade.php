@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container mt-4">
+<div>
     <div class="row justify-content-center">
-        <div class="container">
+        <div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Formulario de Años</h5>

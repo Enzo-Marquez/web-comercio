@@ -17,7 +17,7 @@
         </div>
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-12">
+                <div>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">

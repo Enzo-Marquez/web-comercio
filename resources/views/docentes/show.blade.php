@@ -43,14 +43,13 @@
     </div>
 </div>
 
-<!-- Confirmar actualización -->
 <div class="modal fade" id="confirmUpdateModal" tabindex="-1" aria-labelledby="confirmUpdateModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Actualización</h5>
-                <button type="button" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 ¿Está seguro de que desea actualizar el Docente?
@@ -62,6 +61,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Confirmar volver atrás -->
 <div class="modal fade" id="confirmBackModal" tabindex="-1" aria-labelledby="confirmBackModalLabel"

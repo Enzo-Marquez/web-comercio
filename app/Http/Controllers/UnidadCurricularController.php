@@ -137,6 +137,6 @@ class UnidadCurricularController extends Controller
         $unidadcurricular = UnidadCurricular::find($id);
         $unidadcurricular->delete();
         
-        return redirect()->route('unidadcurricular.lista')->with('success', 'Unidad Curricular Eliminada');
+        return redirect()->route('unidadcurricular.index')->with('success', 'Unidad Curricular Eliminada');
     }
 }

@@ -486,6 +486,13 @@ return [
         [
             'text' => 'Perfil',
             'url'  => '/usuarios',
+            'can'     => 'user',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Usuarios',
+            'can'     => 'admin',
+            'url'  => '/usuarios',
             'icon' => 'fas fa-fw fa-user',
         ],
         // [

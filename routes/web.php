@@ -25,7 +25,6 @@ Route::get('/', function () {
 // Miiddleware //
 Auth::routes();
 
-
 Route::group(['middleware' => 'auth'], function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -79,7 +78,9 @@ Route::delete('/anios{id}', [AniosController::class, 'destroy'])->name('anios-de
 //INICIO UNIDAD CURRICULAR//
 Route::resource('unidadcurricular', UnidadCurricularController::class);
 Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'showLista'])->name('unidadcurricular.lista');
+Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'filter'])->name('unidadcurricular.filter');
 Route::get('/unidadcurricular/{unidadcurricular}/edit', [UnidadCurricularController::class, 'edit'])->name('unidadcurricular.edit');
+Route::delete('/unidadcurricular/{unidadcurricular}/destroy', [UnidadCurricularController::class, 'destroy'])->name('unidadcurricular.destroy');
 //FIN UNIDAD CURRICULAR//
 
     
@@ -121,30 +122,16 @@ Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->
 
 
 
-
-
-
-
-
-
-
-
+//VISTAS USUARIOS NO ADMINISTRADORES
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 // Rutas para Filtrar la mesa de Examen //
-
 Route::get('/lista', [UinscriptionController::class, 'lista'])->name('lista');
-
-// Ruta para el primer filtro
 Route::post('/ver-mesas', [UinscriptionController::class, 'showMesas'])->name('ver_mesas');
-
 Route::get('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
 Route::get('/unidades-curriculares/filter', [UinscriptionController::class, 'filterUnidadesCurriculares'])->name('unidades-curriculares.filter');
-
 Route::post('/unidades-curriculares', [UinscriptionController::class, 'showUnidadesCurriculares'])->name('unidades_curriculares');
-
-
-
 
 
 // Rutas para inscripción a mesas de examen
@@ -155,15 +142,9 @@ Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->n
 Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
 
 
-
-//VISTAS USUARIOS NO ADMINISTRADORES
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
 // Ruta para ver términos y condiciones
 Route::get('/terminos', function () {
     return view('terminos');
-
 });
 
 
@@ -173,11 +154,11 @@ Route::get('/infofechas', function () {
 });
 
 
-// Ruta para mostrar la lista de usuarios
+// Ruta de Usuarios
 Route::resource('usuarios', UsuarioController::class);
 
 
-// Ruta para usercarreras
+// Ruta Para Administrar La Carrera
 Route::resource('usercarreras', UsercarrerasController::class);
 
     

@@ -21,7 +21,19 @@
                             <div class="alert alert-danger">
                             <strong>Error:</strong> El campo "Unidad Curricular" es obligatorio.
                             </div>
-                            @enderror
+                        @enderror
+
+                        @error('anios_id')
+                        <div class="alert alert-danger">
+                        <strong>Error:</strong> El campo "Año" es obligatorio.
+                        </div>
+                        @enderror
+
+                        @error('carreras_id')
+                            <div class="alert alert-danger">
+                            <strong>Error:</strong> El campo "Carreras" es obligatorio.
+                            </div>
+                        @enderror
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Unidad Curricular</label>

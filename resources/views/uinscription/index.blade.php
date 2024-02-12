@@ -134,8 +134,8 @@
     </div>
 @endif
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal"
-    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal">
+    {{-- {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}> --}}
     Enviar Formulario de Inscripción
 </button>
 

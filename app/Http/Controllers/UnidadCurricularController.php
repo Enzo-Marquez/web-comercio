@@ -6,6 +6,8 @@ use App\Models\UnidadCurricular;
 use App\Models\Anio;
 use App\Models\Carrera;
 use Illuminate\Pagination\Paginator;
+use Rap2hpoutre\FastExcel\FastExcel;
+
 
 class UnidadCurricularController extends Controller
 {
@@ -36,7 +38,33 @@ class UnidadCurricularController extends Controller
 
 
 
-    
+    public function exportarExcel(Request $request)
+    {
+        $query = UnidadCurricular::with(['anio', 'carrera']);
+
+        // Aplicar filtros si existen en la solicitud
+        if ($request->filled('anios_id')) {
+            $query->where('anios_id', $request->anios_id);
+        }
+
+        if ($request->filled('carrera_id')) {
+            $query->where('carreras_id', $request->carrera_id);
+        }
+
+        $unidadcurricular = $query->get();
+
+        $data = $unidadcurricular->map(function ($unidad) {
+            return [
+                'Nombre' => $unidad->name,
+                'Año' => optional($unidad->anio)->description,
+                'Carrera' => optional($unidad->carrera)->description,
+            ];
+        });
+
+        $fileName = 'Unidades_Curriuculares.xlsx';
+
+        return (new FastExcel($data))->download($fileName);
+    }
 
 
 

@@ -100,6 +100,9 @@
         </div>
     </div>
 </div>
+<div class="text-center mt-3">
+    <a href="{{ route('exportar-excel') }}" class="btn btn-success">Exportar a Excel</a>
+</div>
 
 <div class="d-flex justify-content-between align-items-center">
     <br>

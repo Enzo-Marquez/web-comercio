@@ -81,6 +81,12 @@ Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'showL
 Route::get('/unidadcurricular/lista', [UnidadCurricularController::class, 'filter'])->name('unidadcurricular.filter');
 Route::get('/unidadcurricular/{unidadcurricular}/edit', [UnidadCurricularController::class, 'edit'])->name('unidadcurricular.edit');
 Route::delete('/unidadcurricular/{unidadcurricular}/destroy', [UnidadCurricularController::class, 'destroy'])->name('unidadcurricular.destroy');
+
+//Exportar Lista de Inscripciones a Excel //
+Route::get('/exportar-excel-unidadcurricular', [UnidadCurricularController::class, 'exportarExcel'])->name('exportar-excel-unidadcurricular');
+//Exportar Lista de Inscripciones a Excel //
+
+
 //FIN UNIDAD CURRICULAR//
 
     
@@ -91,6 +97,9 @@ Route::patch('/mesaexamens/{mesaexamens}')->name('mesaexamens.update');
 Route::post('/get-unidades-curriculares', [MesaexamenController::class, 'getUnidadesCurriculares']);
 Route::post('/mesaexamens/filter2', [MesaexamenController::class, 'filter2'])->name('mesaexamens.filter2');
 
+// RUTA PARA EXPORTAR A EXCEL
+Route::get('/mesaexamens/exportar-excel', [MesaexamenController::class, 'exportarExcel'])->name('mesaexamens.exportarExcel');
+//
 
 
 //Fin Mesa de Examenes //
@@ -106,6 +115,12 @@ Route::get('/docentes/{id}', [DocenteController::class, 'show'])->name('docentes
 Route::get('/docentes/{id}/edit', [DocenteController::class, 'edit'])->name('docentes-edit');
 Route::put('/docentes/{id}', [DocenteController::class, 'update'])->name('docentes-update');
 Route::delete('/docentes/{id}', [DocenteController::class, 'destroy'])->name('docentes-destroy');
+
+// Ruta para Exportar a Excel
+Route::get('/docentes/exportar-excel', [DocenteController::class, 'exportarExcel'])->name('docentes.exportarExcel');
+//
+
+
 // Fin Docentes 
 
 
@@ -113,8 +128,12 @@ Route::delete('/docentes/{id}', [DocenteController::class, 'destroy'])->name('do
 Route::get('/ainscription', [AinscriptionController::class, 'index'])->name('ainscription.index');
 Route::post('/ainscription/filtrar', [AinscriptionController::class, 'filtrarCarreras'])->name('filtrarCarreras');
 Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->name('showForm');
-// Fin Uinscription //
 
+//Exportar Lista de Inscripciones a Excel //
+Route::get('/exportar-excel', [AinscriptionController::class, 'exportarExcel'])->name('exportar-excel');
+//Exportar Lista de Inscripciones a Excel //
+
+// Fin Uinscription //
 
 }); // ↑ aqui arriba para rutas admin
 

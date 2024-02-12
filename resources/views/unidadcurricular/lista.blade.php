@@ -117,10 +117,10 @@
             </div>
         </div>
     </div>
-    <div class="text-center">
-<a href="{{ route('unidadcurricular.index') }}" class="btn btn-primary">Agregar Unidad Curricular</a>
-<div>
-</div>
+    <div class="text-center mt-3">
+                        <a href="{{ route('unidadcurricular.index') }}" class="btn btn-primary">Agregar Unidad Curricular</a>
+                        <a href="{{ route('exportar-excel-unidadcurricular', ['anios_id' => request('anios_id'), 'carrera_id' => request('carrera_id')]) }}" class="btn btn-success">Exportar a Excel</a>
+                    </div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

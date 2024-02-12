@@ -106,9 +106,6 @@ Route::get('/mesaexamens/exportar-excel', [MesaexamenController::class, 'exporta
 
 
 // Inicio Docentes
-Route::get('/docentes', function () {
-    return view('docentes.index');
-})->name('docentes');
 Route::get('/docentes', [DocenteController::class, 'index'])->name('docentes');
 Route::post('/docentes', [DocenteController::class, 'store'])->name('docentes');
 Route::get('/docentes/{id}', [DocenteController::class, 'show'])->name('docentes-show');

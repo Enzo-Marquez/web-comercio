@@ -55,8 +55,7 @@
 
         <button type="submit" class="btn btn-primary">Filtrar</button>
       </form>
-</div>
-</div>
+
     {{-- <div class="row justify-content-center">
         <!-- Agregar formulario de filtro -->
         <form action="{{ route('mesaexamens.lista') }}" method="GET">

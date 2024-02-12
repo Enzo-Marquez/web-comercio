@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Docente;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class DocenteController extends Controller
 {
@@ -62,4 +63,23 @@ class DocenteController extends Controller
         return view('docentes.edit', ['docente' => $docente]);
     }
     
+
+    public function exportarExcel(Request $request)
+    {
+        $search = $request->input('search');
+        $docenteQuery = $search
+            ? Docente::where('nom_doc', 'LIKE', "%$search%")
+            : Docente::query();
+
+        $docenteQuery->orderBy('nom_doc', 'asc');
+        $docentes = $docenteQuery->get();
+
+        $data = $docentes->map(function ($docente) {
+            return [
+                'Nombre' => $docente->nom_doc,
+            ];
+        });
+
+        return (new FastExcel($data))->download('docentes.xlsx');
+    }
 }

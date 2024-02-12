@@ -51,6 +51,7 @@ class UnidadCurricularController extends Controller
             $query->where('carreras_id', $request->carrera_id);
         }
 
+        $query->orderBy('name', 'asc');
         $unidadcurricular = $query->get();
 
         $data = $unidadcurricular->map(function ($unidad) {

@@ -98,7 +98,7 @@ Route::post('/get-unidades-curriculares', [MesaexamenController::class, 'getUnid
 Route::post('/mesaexamens/filter2', [MesaexamenController::class, 'filter2'])->name('mesaexamens.filter2');
 
 // RUTA PARA EXPORTAR A EXCEL
-Route::get('/mesaexamens/exportar-excel', [MesaexamenController::class, 'exportarExcel'])->name('mesaexamens.exportarExcel');
+Route::get('/exportar-excel-mesaexamens', [MesaexamenController::class,'exportarExcel'])->name('exportar-excel-mesaexamens');
 //
 
 
@@ -114,7 +114,7 @@ Route::put('/docentes/{id}', [DocenteController::class, 'update'])->name('docent
 Route::delete('/docentes/{id}', [DocenteController::class, 'destroy'])->name('docentes-destroy');
 
 // Ruta para Exportar a Excel
-Route::get('/docentes/exportar-excel', [DocenteController::class, 'exportarExcel'])->name('docentes.exportarExcel');
+Route::get('/exportar-excel-docentes', [DocenteController::class,'exportarExcel'])->name('exportar-excel-docentes');
 //
 
 

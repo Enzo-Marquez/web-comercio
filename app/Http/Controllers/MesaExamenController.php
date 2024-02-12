@@ -10,6 +10,7 @@ use App\Models\Turno;
 use App\Models\User;
 use App\Models\Docente;
 use Illuminate\Pagination\Paginator;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class MesaexamenController extends Controller
 {
@@ -311,5 +312,37 @@ public function update(Request $request, $id)
 
     return redirect()->route('mesaexamens.index')->with('error', 'Mesa de Examen no encontrada.');
 }
+
+
+
+
+
+public function exportarExcel(Request $request)
+    {
+        Paginator::useBootstrap();
+
+        $query = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'presidente', 'vocal', 'vocal2');
+
+
+        $mesasexamenes = $query->get();
+
+        $data = $mesasexamenes->map(function ($mesaexamen) {
+            return [
+                'Carrera' => $mesaexamen->carrera->description, // Ajusta según la relación en tu modelo
+                'Anio' => $mesaexamen->anio->description, // Ajusta según la relación en tu modelo
+                'Unidad Curricular' => $mesaexamen->unidadCurricular->name, // Ajusta según la relación en tu modelo
+                'Turno' => $mesaexamen->turno->description, // Ajusta según la relación en tu modelo
+                'Hora' => $mesaexamen->hora,
+                'Llamado' => $mesaexamen->llamado,
+                'Llamado2' => $mesaexamen->llamado2,
+                'Presidente' => $mesaexamen->presidente->nom_doc, // Ajusta según la relación en tu modelo
+                'Vocal' => $mesaexamen->vocal->nom_doc, // Ajusta según la relación en tu modelo
+                'Vocal 2' => $mesaexamen->vocal2->nom_doc, // Ajusta según la relación en tu modelo
+                // Agrega aquí las demás columnas necesarias
+            ];
+        });
+
+        return (new FastExcel($data))->download('Mesas_De_Examenes.xlsx');
+    }
 
 }

@@ -145,6 +145,13 @@ class MesaexamenController extends Controller
         return redirect()->route('mesaexamens.index')->with('error', 'Ya existe una mesa con la misma combinación de carrera, año y unidad curricular.');
     }
 
+    // Verifica si los docentes seleccionados como presidente, vocal y vocal2 son diferentes
+    if ($request->presidente_id == $request->vocal_id || $request->presidente_id == $request->vocal2_id || $request->vocal_id == $request->vocal2_id) {
+        // Muestra un mensaje de error y redirige de vuelta al formulario
+        return redirect()->route('mesaexamens.index')->with('error', 'Los docentes seleccionados como presidente, vocal y vocal2 deben ser diferentes.');
+    }
+
+
     // Si no hay una mesa existente, crea la nueva mesa
     $mesasexamenes = new Mesaexamen($request->all());
     $mesasexamenes->save();
@@ -268,7 +275,13 @@ public function update(Request $request, $id)
     // Verifica si se encontró la Mesaexamen
     if (!$mesaexamen) {
         // Manejar la situación en la que no se encontró la Mesaexamen (puedes redirigir a una página de error o hacer lo que sea necesario)
-        return redirect()->route('mesaexamens.index')->with('error', 'Mesa de Examen no encontrada.');
+        return redirect()->route('mesaexamens.lista')->with('error', 'Mesa de Examen no encontrada.');
+    }
+
+    // Verifica si los docentes seleccionados como presidente, vocal y vocal2 son diferentes
+    if ($request->presidente_id == $request->vocal_id || $request->presidente_id == $request->vocal2_id || $request->vocal_id == $request->vocal2_id) {
+        // Muestra un mensaje de error y redirige de vuelta a la página de edición de la mesa con el ID correspondiente
+        return redirect()->route('mesaexamens.edit', $id)->with('error', 'Los docentes seleccionados como Presidente, Vocal y Vocal 2 deben ser diferentes.');
     }
 
     // Actualiza los valores en la instancia de Mesaexamen

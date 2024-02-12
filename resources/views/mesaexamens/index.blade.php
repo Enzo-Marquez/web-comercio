@@ -15,7 +15,7 @@
 @if (session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
-        <strong>Error:</strong> Te faltaron campos por completar.
+        <strong></strong>
     </div>
 @endif
 
@@ -182,4 +182,26 @@
             $('.presidente-select, .vocal-select, .vocal2-select').select2();
         });
     </script>
+
+
+<script>
+    $(document).ready(function() {
+        // Inicializar Select2 para los campos deseados
+        $('.presidente-select, .vocal-select, .vocal2-select').select2();
+
+        // Validar que no se repitan los nombres de docentes
+        $('form').submit(function() {
+            var selectedDocentes = [];
+            $('.docente-select').each(function() {
+                var selectedDocenteId = $(this).find(':selected').data('docente-id');
+                if (selectedDocentes.indexOf(selectedDocenteId) !== -1) {
+                    alert('Error: No se pueden repetir los nombres de los docentes.');
+                    return false; // Evita que se envíe el formulario
+                }
+                selectedDocentes.push(selectedDocenteId);
+            });
+            return true; // Permite el envío del formulario si no hay nombres de docentes repetidos
+        });
+    });
+</script>
 @endsection

@@ -10,6 +10,9 @@
                     <h5 class="mb-0">Actualizar Mesa de Examenes</h5>
                 </div>
                 <div class="card-body">
+                 @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
                     <form id="updateForm" action="{{ route('mesaexamens.update', ['mesaexamens' => $mesaexamen->id]) }}" method="POST">
 
                         @method('PATCH')

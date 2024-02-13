@@ -15,6 +15,9 @@ use App\Http\Controllers\UsercarrerasController;
 use App\Http\Controllers\UinscriptionController;
 use App\Http\Controllers\AinscriptionController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
 
 
 Route::get('/', function () {
@@ -23,15 +26,15 @@ Route::get('/', function () {
 
 
 // Miiddleware //
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => 'auth'], function () {
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
 });
   
 
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => 'admin'], function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::resource('roles', RolController::class);
 
@@ -121,7 +124,7 @@ Route::get('/exportar-excel-docentes', [DocenteController::class,'exportarExcel'
 // Fin Docentes 
 
 
-// Inicio Uinscription //
+// Inicio Ainscription //
 Route::get('/ainscription', [AinscriptionController::class, 'index'])->name('ainscription.index');
 Route::post('/ainscription/filtrar', [AinscriptionController::class, 'filtrarCarreras'])->name('filtrarCarreras');
 Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->name('showForm');
@@ -130,7 +133,9 @@ Route::get('/ainscription/lista', [AinscriptionController::class, 'showForm'])->
 Route::get('/exportar-excel', [AinscriptionController::class, 'exportarExcel'])->name('exportar-excel');
 //Exportar Lista de Inscripciones a Excel //
 
-// Fin Uinscription //
+
+
+// Fin Ainscription //
 
 }); // ↑ aqui arriba para rutas admin
 
@@ -157,6 +162,10 @@ Route::get('/uinscription/{id}', [UinscriptionController::class, 'show'])->name(
 Route::patch('/uinscription/{id}', [UinscriptionController::class, 'update'])->name('uinscription.update');
 Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::class, 'destroy'])->name('uinscription.destroy');
 
+//Exportar Comprobante PDF //
+
+Route::get('/uinscription/{id}/pdf', [UinscriptionController::class,'generatePdf'])->name('uinscription.generatePdf');
+//
 
 // Ruta para ver términos y condiciones
 Route::get('/terminos', function () {

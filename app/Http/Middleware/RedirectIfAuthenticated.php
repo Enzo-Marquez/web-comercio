@@ -15,11 +15,13 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if (auth()->user()->isAdmin())
-                {
+                if (auth()->user()->isAdmin()) {
                     return redirect(RouteServiceProvider::ADMIN);
+                } elseif (auth()->user()->isModerator()) {
+                    return redirect(RouteServiceProvider::MODERATOR_HOME);
+                } else {
+                    return redirect(RouteServiceProvider::HOME);
                 }
-                return redirect(RouteServiceProvider::HOME);
             }
         }
 

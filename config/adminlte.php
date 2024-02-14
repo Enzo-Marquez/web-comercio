@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/dashboard',
+    'dashboard_url' => '/home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -470,6 +470,15 @@ return [
             // 'label'       => 4,
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'Lista de Mesas de Examen',
+            'url'         => '/moderator/filtro',
+            'can'     => 'moderator', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            
+            'icon'        => 'fas fa-tasks',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
 
         [
             'text'        => 'Inscripciones',
@@ -479,7 +488,14 @@ return [
             // 'label'       => 4,
             'label_color' => 'success',
         ],
-
+        [
+            'text'        => 'Inscripciones',
+            'url'         => '/modinscriptions/lista',
+            'can'     => 'moderator', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
+            'icon'        => 'fas fa-address-card',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
 
 
         ['header' => 'Configuraciones'],
@@ -487,6 +503,12 @@ return [
             'text' => 'Perfil',
             'url'  => '/usuarios',
             'can'     => 'user',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Perfil',
+            'url'  => '/usuarios',
+            'can'     => 'moderator',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

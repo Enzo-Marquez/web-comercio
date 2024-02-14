@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TurnosController;
 use App\Http\Controllers\CarrerasController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\UsercarrerasController;
 use App\Http\Controllers\UinscriptionController;
 use App\Http\Controllers\AinscriptionController;
+use App\Http\Controllers\ModeradorController;
+use App\Http\Controllers\ModinscriptionsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -29,8 +32,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
+    Route::get('/home', function () {
+        return view('home');
 });
   
 
@@ -186,5 +189,26 @@ Route::resource('usuarios', UsuarioController::class);
 // Ruta Para Administrar La Carrera
 Route::resource('usercarreras', UsercarrerasController::class);
 
+
+
+
+
+
+
+
+// // Rutas Para Moderador
+Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'moderator'], function () {
+
+
+Route::post('/moderator/filter3', [ModeradorController::class, 'filter3'])->name('moderator.filter3');
+Route::get('moderator/filtro', [ModeradorController::class, 'filter3'])->name('filtro');
+
+
+Route::get('/modinscriptions', [ModinscriptionsController::class, 'index'])->name('modinscriptions.index');
+Route::post('/modinscriptions/filtrar', [ModinscriptionsController::class, 'filtrarCarreras4'])->name('filtrarCarreras4');
+Route::get('/modinscriptions/lista', [ModinscriptionsController::class, 'showForm4'])->name('showForm4');
     
+});
+});
 });

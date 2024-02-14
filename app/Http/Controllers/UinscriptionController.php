@@ -12,6 +12,7 @@ use App\Models\UnidadCurricular;
 use App\Models\Turno;
 use App\Models\User;
 use App\Models\Mesaexamen;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 
 class UinscriptionController extends Controller
@@ -219,6 +220,17 @@ public function index($mesaexamen_id)
                      ->with('success', 'Formulario de Inscripción enviado con éxito.');
 }
 
+public function generatePdf($id)
+{
+    $uinscription = Uinscription::find($id);
+
+    if (!$uinscription) {
+        abort(404);
+    }
+
+    $pdf = PDF::loadView('uinscription.pdf', compact('uinscription'));
+    return $pdf->download('comprobante.pdf');
+}
 
 
 

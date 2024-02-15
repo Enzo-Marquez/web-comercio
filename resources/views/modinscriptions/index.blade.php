@@ -36,6 +36,8 @@
                                     <th>Año</th>
                                     <th>Carrera - Asignatura</th>
                                     <th>Turno</th>
+                                    <th>Llamado</th>
+                                    <th>Llamado2</th>
                                     <th>Docentes</th>
                                     <th>Fecha y Hora de Inscripcion</th>
                                 </tr>
@@ -82,6 +84,8 @@
                                         <td>
                                             {{ $uinscription->mesaexamen->turno->description }}
                                         </td>
+                                         <td>{{ \Carbon\Carbon::parse($uinscription->mesaexamen->llamado)->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($uinscription->mesaexamen->llamado2)->format('d/m/Y') }}</td>
                                         <td>
     {{ optional($uinscription->mesaexamen->presidente)->nom_doc }} |
     {{ optional($uinscription->mesaexamen->vocal)->nom_doc }} |

@@ -53,6 +53,26 @@
             </select>
         </div>
 
+        <div class="mb-3">
+        <label for="fecha_inicio" class="form-label">Fecha de inicio (Llamado 1)</label>
+        <input type="date" name="fecha_inicio" class="form-control" value="{{ request('fecha_inicio') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="fecha_fin" class="form-label">Fecha de fin (Llamado 1)</label>
+        <input type="date" name="fecha_fin" class="form-control" value="{{ request('fecha_fin') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="fecha_inicio_llamado2" class="form-label">Fecha de inicio (llamado 2)</label>
+        <input type="date" name="fecha_inicio_llamado2" class="form-control" value="{{ request('fecha_inicio_llamado2') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="fecha_fin_llamado2" class="form-label">Fecha de fin (llamado 2)</label>
+        <input type="date" name="fecha_fin_llamado2" class="form-control" value="{{ request('fecha_fin_llamado2') }}">
+    </div>
+
         <button type="submit" class="btn btn-primary">Filtrar</button>
       </form>
 </div>

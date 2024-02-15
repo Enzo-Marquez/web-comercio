@@ -61,6 +61,8 @@ public function exportarExcel(Request $request)
                 'Año' => optional(optional($uinscription->mesaexamen)->anio)->description,
                 'Carrera - Asignatura' => optional(optional($uinscription->mesaexamen)->carrera)->description . ' - ' . optional(optional($uinscription->mesaexamen)->unidadCurricular)->name,
                 'Turno' => optional(optional($uinscription->mesaexamen)->turno)->description,
+                'Llamado' => optional($uinscription->mesaexamen)->llamado ? \Carbon\Carbon::parse($uinscription->mesaexamen->llamado)->format('d/m/Y') : null,
+                'Llamado2' => optional($uinscription->mesaexamen)->llamado2 ? \Carbon\Carbon::parse($uinscription->mesaexamen->llamado2)->format('d/m/Y') : null,
                 'Docentes' => optional(optional($uinscription->mesaexamen)->presidente)->nom_doc . ' | ' . optional(optional($uinscription->mesaexamen)->vocal)->nom_doc . ' | ' . optional(optional($uinscription->mesaexamen)->vocal2)->nom_doc,
                 'Fecha y Hora de Inscripcion' => $uinscription->created_at->format('d/m/Y -- H:i:s'),
             ];

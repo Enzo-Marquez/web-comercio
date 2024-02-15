@@ -23,7 +23,6 @@ class ModeradorController extends Controller
 
     public function filter3(Request $request)
 {
-
     $query = Mesaexamen::with('carrera', 'anio', 'unidadCurricular', 'turno', 'presidente', 'vocal', 'vocal2');
 
     if ($request->filled('anios_id')) {
@@ -38,6 +37,16 @@ class ModeradorController extends Controller
         });
     }
 
+    // Agregar filtro de rango de fechas
+    if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
+        $query->whereBetween('llamado', [$request->fecha_inicio, $request->fecha_fin]);
+    }
+
+    // Agregar filtro de rango de fechas para llamado2
+    if ($request->filled('fecha_inicio_llamado2') && $request->filled('fecha_fin_llamado2')) {
+        $query->whereBetween('llamado2', [$request->fecha_inicio_llamado2, $request->fecha_fin_llamado2]);
+    }
+
     $mesasexamenes = $query->get();
     $anios = Anio::all();
     $carreras = Carrera::all();
@@ -45,6 +54,7 @@ class ModeradorController extends Controller
     // Asegúrate de pasar $mesasexamenes a la vista
     return view('moderator.lista2', compact('mesasexamenes', 'anios', 'carreras'));
 }
+
 
 
 

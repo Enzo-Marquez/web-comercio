@@ -512,6 +512,12 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
+            'text' => 'Desabhilitar Inscripciones',
+            'can'     => 'admin',
+            'url'  => '/uinscription/index',
+            'icon' => 'fas fa-fw fa-power-off',
+        ],
+        [
             'text' => 'Usuarios',
             'can'     => 'admin',
             'url'  => '/usuarios',

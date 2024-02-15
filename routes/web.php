@@ -140,6 +140,12 @@ Route::get('/exportar-excel', [AinscriptionController::class, 'exportarExcel'])-
 
 // Fin Ainscription //
 
+// Botones para Desabhilitar Inscripciones //
+Route::get('/ocultar-boton', [UinscriptionController::class,'ocultarBoton']);
+Route::get('/mostrar-boton', [UinscriptionController::class,'mostrarBoton']);
+// Fin de Botones para Desabhilitar Inscripciones //
+
+
 }); // ↑ aqui arriba para rutas admin
 
 

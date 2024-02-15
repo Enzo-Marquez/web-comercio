@@ -12,6 +12,7 @@ use App\Models\UnidadCurricular;
 use App\Models\Turno;
 use App\Models\User;
 use App\Models\Mesaexamen;
+use Illuminate\Support\Facades\Cache;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 
@@ -146,10 +147,15 @@ public function index($mesaexamen_id)
             ->where('id', $mesaexamen_id)
             ->first();
 
+
         // Obtén la instancia de Uinscription según sea necesario
         $uinscription = Uinscription::where('user_id', Auth::id())
             ->where('mesaexamen_id', $mesaexamen_id)
             ->first();
+
+
+            $ocultarBoton = $uinscription !== null;
+            session(['ocultar_boton' => $ocultarBoton]);
 
         // Pasa la información a la vista
         return view('uinscription.index', compact('usercarreras', 'mesaexamens', 'mesa_id', 'uinscription'));
@@ -162,7 +168,19 @@ public function index($mesaexamen_id)
 
 
 
+public function ocultarBoton()
+{
+    Cache::put('ocultar_boton', true); // Puedes ajustar el tiempo de caché según tus necesidades
+    Cache::put('ocultar_boton_eliminar', true);
+    return redirect()->back();
+}
 
+public function mostrarBoton()
+{
+    Cache::put('ocultar_boton', false); // Puedes ajustar el tiempo de caché según tus necesidades
+    Cache::put('ocultar_boton_eliminar', false);
+    return redirect()->back();
+}
 
 
 

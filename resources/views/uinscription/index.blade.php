@@ -1,6 +1,10 @@
 @extends('app')
 
 @section('content')
+@php
+    use Carbon\Carbon;
+@endphp
+@if (Auth::user()->user_type === 'user')
     <div>
         <div class="row justify-content-center">
             <div>
@@ -11,9 +15,7 @@
 
 
 <!-- Asegúrate de haber importado Carbon en la parte superior de tu archivo de vista -->
-@php
-    use Carbon\Carbon;
-@endphp
+
 
 
 
@@ -124,22 +126,88 @@
 
                    
 
-                    
+                    @endif
                     
 
 
-@if(isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10)
-    <div class="alert alert-warning mt-3">
-        El tiempo límite de inscripción ha pasado. Ya no es posible Inscribirse o Eliminarse de la Mesa.
+
+@unless(Cache::get('ocultar_boton'))
+@if (Auth::user()->user_type === 'admin')
+        <div class="alert alert-success mt-3">
+        Inscripciones Habilitadas
     </div>
+    @endif
+    @if (Auth::user()->user_type === 'user')
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal">
+        Enviar Formulario de Inscripción
+    </button>
+    @endif
+@else
+@if (Auth::user()->user_type === 'user')
+    <div class="alert alert-warning mt-3">
+        El tiempo límite de inscripción ha pasado. Ya no es posible inscribirse o eliminarse de la Mesa.
+    </div>
+    @endif
+    @if (Auth::user()->user_type === 'admin')
+        <div class="alert alert-warning mt-3">
+        Inscripciones Desabhilitadas
+    </div>
+    @endif
+@endunless
+
+@if (Auth::user()->user_type === 'admin')
+<!-- Botón para ocultar -->
+<button type="button" class="btn btn-danger" onclick="ocultarBoton()">Deshabilitar Inscripciones</button>
+
+<!-- Botón para mostrar -->
+<button type="button" class="btn btn-success" onclick="mostrarBoton()">Habilitar Inscripciones</button>
 @endif
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal">
-    {{-- {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}> --}}
-    Enviar Formulario de Inscripción
-</button>
 
 
+
+
+<script>
+    function ocultarBoton() {
+        $.ajax({
+            url: '/ocultar-boton',
+            type: 'GET',
+            success: function(response) {
+                location.reload(); // Recarga la página para reflejar el cambio
+            }
+        });
+    }
+
+    function mostrarBoton() {
+        $.ajax({
+            url: '/mostrar-boton',
+            type: 'GET',
+            success: function(response) {
+                location.reload(); // Recarga la página para reflejar el cambio
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- @if (session('success'))
+        <p>{{ session('success') }}</p>
+        @if (isset($uinscription))
+            <a href="{{ route('uinscription.generatePdf', ['id' => $uinscription->id]) }}" target="_blank">Generar PDF</a>
+        @endif
+    @endif --}}
 
 
 
@@ -204,11 +272,13 @@
 
 <!-- Botón y Modal para eliminar -->
 @if ($uinscription)
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}"
-    {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}>
+@unless(Cache::get('ocultar_boton_eliminar'))
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-form-action="{{ route('uinscription.destroy', ['id' => $uinscription->id, 'mesaexamen_id' => $uinscription->mesaexamen_id]) }}">
+    {{-- {{ isset($mesaexamens) && Carbon::now()->diffInDays($mesaexamens->llamado) <= 10 ? 'disabled' : '' }}> --}}
     Eliminar Inscripción
 </button>
-
+@endunless
 
     <!-- Modal de Confirmación de Eliminación -->
     <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">

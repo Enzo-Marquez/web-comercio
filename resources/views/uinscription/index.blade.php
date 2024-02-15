@@ -1,9 +1,14 @@
 @extends('app')
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">    
 
 @section('content')
+
 @php
     use Carbon\Carbon;
 @endphp
+<!-- Incluir Font Awesome (CDN) en el head de tu HTML -->
+
+
 @if (Auth::user()->user_type === 'user')
     <div>
         <div class="row justify-content-center">
@@ -139,7 +144,7 @@
     @endif
     @if (Auth::user()->user_type === 'user')
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscriptionModal">
-        Enviar Formulario de Inscripción
+        Inscribirme
     </button>
     @endif
 @else
@@ -201,13 +206,6 @@
 
 
 
-
-{{-- @if (session('success'))
-        <p>{{ session('success') }}</p>
-        @if (isset($uinscription))
-            <a href="{{ route('uinscription.generatePdf', ['id' => $uinscription->id]) }}" target="_blank">Generar PDF</a>
-        @endif
-    @endif --}}
 
 
 
@@ -304,6 +302,25 @@
             </div>
         </div>
     </div>
+    <style>
+ .red-color {
+        color:red;
+    }
+   </style>
+
+
+@if (isset($uinscription))
+<div style="text-align: right;">
+    <a href="{{ route('uinscription.generatePdf', ['uinscription_id' => $uinscription->id]) }}" target="_blank" style="display: inline-block; text-decoration: none; background-color: #808080; color: #fff; padding: 10px 20px; border-radius: 5px; border: 1px solid #808080;">
+        <span style="vertical-align: middle;">Generar Comprobante</span>
+        <img src="{{ asset('assets/img/boton-pdf.png') }}" alt="Generar PDF" style="max-width: 40px; vertical-align: middle; margin-left: 5px;">
+    </a>
+</div>
+
+
+
+
+@endif
 @endif
 
 

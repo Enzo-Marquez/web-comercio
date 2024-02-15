@@ -173,7 +173,8 @@ Route::delete('/uinscription/{id}/{mesaexamen_id}', [UinscriptionController::cla
 
 //Exportar Comprobante PDF //
 
-Route::get('/uinscription/{id}/pdf', [UinscriptionController::class,'generatePdf'])->name('uinscription.generatePdf');
+Route::get('/uinscription/generatePdf/{uinscription_id}', [UinscriptionController::class, 'generatePdf'])->name('uinscription.generatePdf');
+
 //
 
 // Ruta para ver términos y condiciones

@@ -238,19 +238,36 @@ public function mostrarBoton()
                      ->with('success', 'Formulario de Inscripción enviado con éxito.');
 }
 
-public function generatePdf($id)
+
+
+public function generatePdf($uinscription_id)
 {
-    $uinscription = Uinscription::find($id);
+    $uinscription = Uinscription::where('user_id', Auth::id())
+    ->where('id', $uinscription_id)
+    ->first();
 
     if (!$uinscription) {
-        abort(404);
+        abort(403, 'Acceso no autorizado'); // O puedes redirigir a una página de error
     }
+    
+    $usercarreras = Usercarrera::with(['carrera', 'user'])
+        ->where('user_id', Auth::id())
+        ->first();
 
-    $pdf = PDF::loadView('uinscription.pdf', compact('uinscription'));
-    return $pdf->download('comprobante.pdf');
+    // Asegúrate de que $usercarreras no sea nulo antes de continuar
+    if ($usercarreras) {
+        $mesaexamens = Mesaexamen::with(['carrera', 'unidadCurricular', 'turno', 'anio'])
+            ->select('carreras_id','anios_id','unidad_curriculars_id','turnos_id','presidente_id','vocal_id','vocal2_id','hora',
+            'llamado',
+            'llamado2',)
+            ->first();
+
+    $pdf = PDF::loadView('uinscription.pdf', compact('usercarreras', 'mesaexamens', 'uinscription'));
+
+    return $pdf->stream('comprobante_inscripcion.pdf');
 }
 
-
+}
 
 
     // Puedes agregar más métodos según sea necesario

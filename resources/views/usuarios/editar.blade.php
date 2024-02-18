@@ -34,21 +34,20 @@
                                             <label for="email">Email</label>
                                             <input type="text" name="email" class="form-control" value="{{ $usuarioEditar->email }}" readonly style="background-color: #f2f2f2; color: #555; cursor: not-allowed;">
                                             <label for="name">Nombre</label>
-                                            <input type="text" name="name" class="form-control" value="{{ $usuarioEditar->name }}">
+                                            <input type="text" name="name" class="form-control" value="{{ $usuarioEditar->name }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
                                             <label for="apellido">Apellido</label>
-                                            <input type="text" name="apellido" class="form-control" value="{{ $usuarioEditar->apellido }}">
+                                            <input type="text" name="apellido" class="form-control" value="{{ $usuarioEditar->apellido }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
                                             <label for="dni">DNI</label>
-                                            <input type="number" name="dni" class="form-control" value="{{ $usuarioEditar->dni }}">
+                                            <input type="number" name="dni" class="form-control" value="{{ $usuarioEditar->dni }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
+                                            
                                             @if(\Illuminate\Support\Facades\Auth::user()->can('edit-roles'))
-    <label for="rol">Rol</label>
-    <select name="rol" class="form-control">
-        @foreach($roles as $rol)
-            <option value="{{ $rol }}" {{ $usuarioEditar->user_type == $rol ? 'selected' : '' }}>{{ ucfirst($rol) }}</option>
-        @endforeach
-    </select>
-@endif
-
-                                            </select>
+                                                <label for="rol">Rol</label>
+                                                <select name="rol" class="form-control">
+                                                    @foreach($roles as $rol)
+                                                        <option value="{{ $rol }}" {{ $usuarioEditar->user_type == $rol ? 'selected' : '' }}>{{ ucfirst($rol) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                         <br>
                                     </div>

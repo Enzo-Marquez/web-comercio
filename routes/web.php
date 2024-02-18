@@ -97,6 +97,8 @@ Route::get('/exportar-excel-unidadcurricular', [UnidadCurricularController::clas
 
     
 //Mesa de Examenes //
+Route::delete('/mesaexamens/destroyMultiple', [MesaExamenController::class, 'destroyMultiple'])
+    ->name('mesaexamens.destroyMultiple');
 Route::resource('mesaexamens', MesaexamenController::class);
 Route::get('/mesaexamens/lista', [MesaexamenController::class, 'showLista'])->name('mesaexamens.lista');
 Route::patch('/mesaexamens/{mesaexamens}')->name('mesaexamens.update');

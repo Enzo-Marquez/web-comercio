@@ -326,7 +326,33 @@ public function update(Request $request, $id)
     return redirect()->route('mesaexamens.index')->with('error', 'Mesa de Examen no encontrada.');
 }
 
-
+public function destroyMultiple(Request $request)
+    {
+        $mesaexamenIds = $request->input('mesaexamen_ids');
+    
+        try {
+            if (is_array($mesaexamenIds) && count($mesaexamenIds) > 0) {
+                // Verificar si hay alumnos inscritos en alguna de las mesas de examen seleccionadas
+                $mesasConInscripciones = Mesaexamen::whereIn('id', $mesaexamenIds)
+                    ->whereHas('uinscriptions')
+                    ->pluck('id')
+                    ->toArray();
+    
+                if (!empty($mesasConInscripciones)) {
+                    throw new \Exception('No puedes eliminar mesas de examen con alumnos inscritos. Primero elimina las inscripciones asociadas.');
+                }
+    
+                // Eliminar las mesas de examen seleccionadas
+                Mesaexamen::whereIn('id', $mesaexamenIds)->delete();
+    
+                return redirect()->route('mesaexamens.lista')->with('success', 'Mesas de Examen Eliminadas');
+            }
+    
+            throw new \Exception('Ninguna Mesa de Examen seleccionada para eliminar.');
+        } catch (\Exception $e) {
+            return redirect()->route('mesaexamens.lista')->with('error', 'Error al eliminar las Mesas de Examen: ' . $e->getMessage());
+        }
+    }
 
 
 

@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem; /* Ajusta el tamaño del texto base según tus necesidades */
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #C4C4C4;
+  font-family: 'Share Tech', sans-serif;
+  position: relative;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2%;
+}
+
+ul li,
+.btn-primary {
+  display: inline-block;
+  list-style: none;
+  padding: 6px 20px;
+  font-weight: 500;
+  font-size: 2.5rem; /* Ajusta el tamaño del texto según tus necesidades */
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: #031693;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #fff;
+}
+
+header {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  margin-top: 10%;
+}
+
+@media (min-width: 1200px) {
+  ul li,
+  .btn-primary,
+  header h1 {
+    font-size: 2.5rem; /* Ajusta el tamaño del texto según tus necesidades */
+  }
+
+  header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+  }
+
+  header button[type="button"] {
+    font-size: 2.5rem; /* Ajusta el tamaño del texto según tus necesidades */
+    padding: 15px 30px;
+    margin-top: 20px;
+  }
+}
+
+header h1 {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+header h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+header button[type="button"] {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #0b05c1;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+header button[type="button"]:hover {
+  background-color: #031693;
+}
+
+header button[type="button"] img {
+  width: 15px;
+  margin-left: 8px;
+}
+
+button img {
+  display: none;
+  max-width: 100%;
+}
+
+button:hover img {
+  display: inline-block;
+}
+
+header button:hover {
+  width: 160px;
+}
+
+.container .emp {
+  height: 80px;
+  width: 80px;
+  margin-left: 10px;
+  z-index: 999;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .container .emp {
+    width: 50%;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+  }
+
+  .logo-text {
+    margin-left: 10px;
+  }
+
+  header h1 {
+    font-size: 3rem;
+  }
+
+  header h2 {
+    font-size: 1.5rem;
+  }
+
+  header button {
+    width: 100%;
+  }
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-weight: 600;
+  font-size: 1.8rem;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.icons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.icons a {
+  text-decoration: none;
+  color: #000;
+}
+
+.icons i {
+  font-size: 2.5rem;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.icons i.bxl-instagram:hover {
+  color: #e4405f;
+}
+
+.icons i.bxl-facebook:hover {
+  color: #1877f2;
+}
+
+.icons i.bxl-youtube:hover {
+  color: #ff0000;
+}

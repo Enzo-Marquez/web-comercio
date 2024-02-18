@@ -3,11 +3,11 @@
 @section('title', 'Dashboard Administración')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Sistema De Gestión de Mesas</h1>
 @stop
 
 @section('content')
-    <p>Bienvenido al panel de Usuarios.</p>
+    <p>Bienvenido al panel de Alumnos</p>
 
     @if(empty(auth()->user()->dni) || empty(auth()->user()->apellido))
         <div class="alert alert-warning" id="incomplete-profile-alert">

@@ -42,8 +42,17 @@ class UsuarioController extends Controller
     
         // Aplicar filtro solo si se proporciona un término de búsqueda
         if ($search) {
-            $usuarios = $usuarios->where('name', 'LIKE', "%$search%");
+            $keywords = explode(' ', $search);
+        
+            $usuarios = $usuarios->where(function($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where('name', 'LIKE', "%$keyword%")
+                          ->orWhere('apellido', 'LIKE', "%$keyword%");
+                }
+            });
         }
+        
+        
     
         // Obtener los resultados finales
         $usuarios = $usuarios->paginate(10);

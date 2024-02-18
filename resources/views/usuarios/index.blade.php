@@ -44,8 +44,16 @@
                                                 <td>{{ $usuario->apellido }}</td>
                                                 <td>{{ $usuario->dni }}</td>
                                                 <td>{{ $usuario->email }}</td>
-                                                <td> 
-                                                    <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar</a>
+                                                <td>
+                                                    @if (Auth::user()->user_type === 'admin' && $usuario->id !== Auth::user()->id)
+                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Rol</a>
+                                                    @elseif (Auth::user()->user_type === 'admin' && $usuario->id === Auth::user()->id)
+                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                    @elseif (Auth::user()->user_type === 'user' && $usuario->id === Auth::user()->id)
+                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                    @elseif (Auth::user()->user_type === 'moderator' && $usuario->id === Auth::user()->id)
+                                                    <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -53,46 +61,14 @@
                                 </table>
                             </div>
 
-
-                            
-@if (Auth::user()->user_type === 'admin')
-                            <!-- Muestra los botones de paginación en estilo de chat -->
-                            <div class="d-flex justify-content-center mt-4">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        @if ($usuarios->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link">&laquo; Anterior</span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $usuarios->previousPageUrl() }}" aria-label="Anterior">
-                                                    <span aria-hidden="true">&laquo; Anterior</span>
-                                                </a>
-                                            </li>
-                                        @endif
-
-                                        @for ($i = 1; $i <= $usuarios->lastPage(); $i++)
-                                            <li class="page-item {{ $usuarios->currentPage() == $i ? 'active' : '' }}">
-                                                <a class="page-link" href="{{ $usuarios->url($i) }}">{{ $i }}</a>
-                                            </li>
-                                        @endfor
-
-                                        @if ($usuarios->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $usuarios->nextPageUrl() }}" aria-label="Siguiente">
-                                                    <span aria-hidden="true">Siguiente &raquo;</span>
-                                                </a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link">Siguiente &raquo;</span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </nav>
-                            </div>
-@endif
+                            @if (Auth::user()->user_type === 'admin')
+                                <!-- Muestra los botones de paginación en estilo de chat -->
+                                <div class="d-flex justify-content-center mt-4">
+                                    <nav aria-label="Page navigation example">
+                                        <!-- Código de paginación aquí -->
+                                    </nav>
+                                </div>
+                            @endif
                             <a class="btn btn-info" href="{{ route('usercarreras.index')}}">Administrar Carreras</a>
                         </div>
                     </div>

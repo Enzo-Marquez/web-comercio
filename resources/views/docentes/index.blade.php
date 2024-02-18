@@ -118,6 +118,7 @@
 $('#asd').DataTable({
 responsive: true,
 autoWidth: false,
+scrollX: true,
 
 "language": {
             "lengthMenu": "Mostrar " + 

@@ -10,6 +10,8 @@
                    <div class="card-body">
     <p>Los exámenes se llevarán a cabo de forma PRESENCIAL. Las asignaturas ya están registradas en su perfil, vinculadas a las carreras que seleccione en la sección correspondiente.</p>
 
+    <p><strong>En el proceso de inscripción, es importante que el alumno verifique con precisión sus datos personales. Cualquier inscripción que contenga información no correspondiente al alumno será descartada automáticamente y no será considerada.</strong></p>
+
     <p>Para completar el proceso de inscripción, cada estudiante debe completar el formulario correspondiente para cada materia en la que desee rendir. Es de suma importancia que cada estudiante asuma la responsabilidad de inscribirse en las materias correctas.</p>
 
     <p>Los alumnos regulares rendirán de acuerdo con la planificación de la materia del año de la regularidad, y los alumnos libres según la planificación del año en que cursen la asignatura. Las regularidades de espacios curriculares con formato "materia" tienen una duración de 3 años, que se cuentan a partir del próximo año de cursado.</p>

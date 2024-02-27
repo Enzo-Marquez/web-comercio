@@ -18,7 +18,29 @@
         <strong></strong>
     </div>
 @endif
+<style>
+    /* Ajustar el ancho del cuadro de Select2 según el diseño de tu formulario */
+    .select2-container {
+        width: 100%;
+    }
 
+    /* Añadir algunos estilos adicionales para mejorar la apariencia */
+    .select2-container .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da; /* Color del borde */
+        border-radius: 4px; /* Bordes redondeados */
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        line-height: 36px;
+        color: #495057; /* Color del texto */
+    }
+
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 36px;
+        border: none;
+    }
+</style>
 @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Error:</strong> Por favor, revisa los siguientes campos antes de continuar.

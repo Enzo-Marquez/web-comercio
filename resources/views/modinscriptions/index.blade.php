@@ -31,8 +31,9 @@
                                 <tr>
                                     <th class="long-header">Numero De Inscricpion</th>
                                     <th>Alumno</th>
-                                    <th>Dni Alumno</th>
-                                    <th>Correo Alumno</th>
+                                    <th>Dni</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
                                     <th>Año</th>
                                     <th>Carrera - Asignatura</th>
                                     <th>Turno</th>
@@ -63,6 +64,13 @@
                                         <td>
                                             @if ($uinscription->usuario)
                                                 {{ $uinscription->usuario->email }}
+                                            @else
+                                                Usuario no disponible
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($uinscription->usuario)
+                                                {{ $uinscription->usuario->telefono }}
                                             @else
                                                 Usuario no disponible
                                             @endif

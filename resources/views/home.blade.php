@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <p>Bienvenido al panel de Alumnos</p>
+    <p>Bienvenido al panel de Gestión de Mesas</p>
 
     @if(empty(auth()->user()->dni) || empty(auth()->user()->apellido))
         <div class="alert alert-warning" id="incomplete-profile-alert">

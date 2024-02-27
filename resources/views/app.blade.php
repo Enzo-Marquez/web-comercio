@@ -7,7 +7,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Sistema de Gestion de Mesas</h1>
+    <h1>Sistema de Gestión de Mesas</h1>
 @stop
 
 @section('content')

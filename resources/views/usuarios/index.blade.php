@@ -5,6 +5,12 @@
 @endphp
 
 @section('content')
+
+<style>
+.fixed-width-btn {
+    width: 100px; /* Ajusta el ancho según sea necesario */
+}
+</style>
     <section class="section">
         <div>
             <h3 class="page__heading">Perfil</h3>
@@ -33,7 +39,8 @@
                                         <th>Nombre</th>
                                         <th>Apellido</th>
                                         <th>Dni</th>
-                                        <th>E-mail</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
                                         <th>Acciones</th>
                                     </thead>
                                     <tbody>
@@ -44,15 +51,16 @@
                                                 <td>{{ $usuario->apellido }}</td>
                                                 <td>{{ $usuario->dni }}</td>
                                                 <td>{{ $usuario->email }}</td>
+                                                <td>{{ $usuario->telefono }}</td>
                                                 <td>
                                                     @if (Auth::user()->user_type === 'admin' && $usuario->id !== Auth::user()->id)
-                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Rol</a>
+                                                        <a class="btn btn-primary btn-sm fixed-width-btn" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Rol</a>
                                                     @elseif (Auth::user()->user_type === 'admin' && $usuario->id === Auth::user()->id)
-                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                        <a class="btn btn-success btn-sm fixed-width-btn" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
                                                     @elseif (Auth::user()->user_type === 'user' && $usuario->id === Auth::user()->id)
-                                                        <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                        <a class="btn btn-primary btn-sm fixed-width-btn" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
                                                     @elseif (Auth::user()->user_type === 'moderator' && $usuario->id === Auth::user()->id)
-                                                    <a class="btn btn-primary btn-sm" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
+                                                    <a class="btn btn-primary btn-sm fixed-width-btn" href="{{ route('usuarios.edit', $usuario->id) }}">Editar Datos</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -69,7 +77,9 @@
                                     </nav>
                                 </div>
                             @endif
+                            @if (Auth::user()->user_type === 'user')
                             <a class="btn btn-info" href="{{ route('usercarreras.index')}}">Administrar Carreras</a>
+                            @endif
                         </div>
                     </div>
                 </div>

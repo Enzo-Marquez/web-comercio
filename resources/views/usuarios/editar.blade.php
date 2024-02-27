@@ -39,15 +39,17 @@
                                             <input type="text" name="apellido" class="form-control" value="{{ $usuarioEditar->apellido }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
                                             <label for="dni">DNI</label>
                                             <input type="number" name="dni" class="form-control" value="{{ $usuarioEditar->dni }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
-                                            
+                                            <label for="telefono">Telefono</label>
+                                            <input type="number" name="telefono" class="form-control" value="{{ $usuarioEditar->telefono }}" {{ $usuarioEditar->id === Auth::user()->id ? '' : 'readonly' }}>
+
                                             @if(\Illuminate\Support\Facades\Auth::user()->can('edit-roles'))
-                                                <label for="rol">Rol</label>
-                                                <select name="rol" class="form-control">
-                                                    @foreach($roles as $rol)
-                                                        <option value="{{ $rol }}" {{ $usuarioEditar->user_type == $rol ? 'selected' : '' }}>{{ ucfirst($rol) }}</option>
-                                                    @endforeach
-                                                </select>
-                                            @endif
+    <label for="rol">Rol</label>
+    <select name="rol" class="form-control" {{ $usuarioEditar->id === Auth::user()->id ? 'disabled' : '' }}>
+        @foreach($roles as $rol)
+            <option value="{{ $rol }}" {{ $usuarioEditar->user_type == $rol ? 'selected' : '' }}>{{ ucfirst($rol) }}</option>
+        @endforeach
+    </select>
+@endif
                                         </div>
                                         <br>
                                     </div>

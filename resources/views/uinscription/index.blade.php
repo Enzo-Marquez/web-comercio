@@ -66,6 +66,26 @@
                                         </td>
                                     </tr>
 
+                                <th>Teléfono</th>
+                                        <td>
+                                            @if(Auth::user()->telefono)
+                                                {{ Auth::user()->telefono }}
+                                            @else
+                                                <p class="text-danger">¡Error! No se ha encontrado un Telefono cargado para este usuario.</p>
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                    <th>Email</th>
+                                        <td>
+                                            @if(Auth::user()->email)
+                                                {{ Auth::user()->email }}
+                                            @else
+                                                <p class="text-danger">¡Error! No se ha encontrado un Telefono cargado para este usuario.</p>
+                                            @endif
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <th>Nombre</th>
                                         <td>{{ Auth::user()->name }}</td>
@@ -155,7 +175,7 @@
     @endif
     @if (Auth::user()->user_type === 'admin')
         <div class="alert alert-warning mt-3">
-        Inscripciones Desabhilitadas
+        Inscripciones Deshabilitadas
     </div>
     @endif
 @endunless
@@ -232,7 +252,8 @@
                     <div class="mb-3">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="termsCheckbox" name="termsCheckbox" required>
-                            <label class="form-check-label" for="termsCheckbox">  Acepto los términos y condiciones. Al enviar este formulario, confirmo que he leído y estoy de acuerdo con los términos y condiciones establecidos para rendir esta asignatura.</label>
+                            <label class="form-check-label" for="termsCheckbox">  Acepto los términos y condiciones. Al enviar este formulario, confirmo que he leído y estoy de acuerdo con los términos y condiciones establecidos para rendir esta asignatura.</label><br><br>
+                            <strong style="color: red;">¡POR FAVOR UNA VEZ INSCRIPTO DESCARGUE EL COMPROBANTE PARA EVITAR INCONVENIENTES!</strong>
                         </div>
                     </div>
 

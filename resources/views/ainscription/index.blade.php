@@ -29,14 +29,15 @@
                         <table id="asd" class="table table-sm table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="long-header">Numero De Inscricpion</th>
+                                    <th scope="col">Nº Inscripción</th>
                                     <th>Alumno</th>
-                                    <th>Dni Alumno</th>
-                                    <th>Correo Alumno</th>
+                                    <th>Dni</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
                                     <th>Año</th>
                                     <th>Carrera - Asignatura</th>
                                     <th>Turno</th>
-                                    <th>Llamado</th>
+                                    <th>Llamado1</th>
                                     <th>Llamado2</th>
                                     <th>Docentes</th>
                                     <th>Fecha y Hora de Inscripcion</th>
@@ -45,8 +46,8 @@
                             <tbody>
                                 @foreach($uinscriptions as $uinscription)
                                     <tr>
-                                        <td>{{ $uinscription->id }}</td>
-                                        <td>
+                                        <td scope="row">{{ $uinscription->id }}</td>
+                                        <td scope="row">
                                             @if ($uinscription->usuario)
                                                 {{ $uinscription->usuario->name }} {{ $uinscription->usuario->apellido }}
                                             @else
@@ -63,6 +64,13 @@
                                         <td>
                                             @if ($uinscription->usuario)
                                                 {{ $uinscription->usuario->email }}
+                                            @else
+                                                Usuario no disponible
+                                            @endif
+                                        </td>
+                                         <td>
+                                            @if ($uinscription->usuario)
+                                                {{ $uinscription->usuario->telefono }}
                                             @else
                                                 Usuario no disponible
                                             @endif

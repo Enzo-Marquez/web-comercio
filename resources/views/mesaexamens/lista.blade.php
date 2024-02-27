@@ -117,9 +117,9 @@
     <a href="{{ route('mesaexamens.edit', ['mesaexamen' => $mesaexamen->id]) }}" class="btn btn-primary btn-sm btn-block">
         Editar
     </a>
-    <button type="button" class="btn btn-danger btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $mesaexamen->id }}">
+    {{-- <button type="button" class="btn btn-danger btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $mesaexamen->id }}">
         Eliminar
-    </button>
+    </button> --}}
     <!-- Resto de las acciones -->
 </td>
  <!-- Modal de Confirmación -->

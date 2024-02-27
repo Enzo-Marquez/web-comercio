@@ -28,9 +28,10 @@ class Carrera extends Model
  // Corregir la relación a 'hasMany' con el modelo 'Usercarrera'
  public function usercarreras()
  {
-     return $this->hasMany(Usercarrera::class);
+     return $this->hasMany(Usercarrera::class)->onDelete('cascade');
  }
 
+ 
 
 }
 

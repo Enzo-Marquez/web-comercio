@@ -9,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            width: 100%;
         }
 
         h1, h2 {
@@ -43,18 +44,33 @@
     <h2 style="float: left; margin-top: 20px;">Escuela Superior de Comercio Nº 43</h2>
     <div style="clear: both;"></div>
 </div>
-    <h1>Comprobante de Inscripción</h1>
+    <h3>Comprobante de Inscripción:</h3>
 
-    <div>
         <!-- Información del Usuario -->
         <div>
-            <h2>Información Del Alumno:</h2>
+            <h3>Información Del Alumno:</h3>
             <table>
                 <tr>
                     <th>DNI</th>
                     <td>
                         @if(Auth::user()->dni)
                             {{ Auth::user()->dni }}
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>Teléfono</th>
+                    <td>
+                        @if(Auth::user()->telefono)
+                            {{ Auth::user()->telefono }}
+                        @endif
+                    </td>
+                </tr>
+                 <tr>
+                    <th>Email</th>
+                    <td>
+                        @if(Auth::user()->email)
+                            {{ Auth::user()->email }}
                         @endif
                     </td>
                 </tr>
@@ -75,8 +91,8 @@
             </table>
         </div>
 
-        <div>
-            <h2>Información de la Mesa de Examen:</h2>
+
+            <h3>Información de la Mesa de Examen:</h3>
             <table>
                 @if ($mesaexamens)
                     <tr>
@@ -118,7 +134,6 @@
                 </table>
             @endif
         </div>
-    </div>
 
     <!-- Número de Inscripción y Fecha de Inscripción -->
     @if ($uinscription)

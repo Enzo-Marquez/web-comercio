@@ -104,7 +104,8 @@ public function update(Request $request, $id)
     $this->validate($request, [
         'name' => 'required',
         'apellido' => 'required',
-        'dni' => 'required|numeric|digits:8',
+        'dni' => 'required|numeric|digits:8|unique:users,dni,' . $id,
+        'telefono' => 'nullable|numeric|digits_between:6,15',
         'email' => 'required|email|unique:users,email,' . $id,
         'rol' => '', // Elimina la regla de validación para el campo 'rol'
     ]);

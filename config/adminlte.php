@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Gestion de Mesas</b>',
+    'logo' => '<b>Gestión de Mesas</b>',
     'logo_img' => 'vendor/adminlte/dist/img/Escuela.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -315,7 +315,7 @@ return [
 
 // Paginas Users:
 
-        ['header' => 'Gestion de Mesas',
+        ['header' => 'Gestión de Mesas',
         'can'     => 'user'],
 
 
@@ -331,7 +331,7 @@ return [
         ],
 
         [
-            'text'        => 'Ver Terminos y Condiciones Para Rendir',
+            'text'        => 'Ver Términos y Condiciones Para Rendir',
             'url'         => '/terminos',
             'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
@@ -341,7 +341,7 @@ return [
         ],
 
         [
-            'text'        => 'Informacion y Fechas',
+            'text'        => 'Información y Fechas',
             'url'         => '/infofechas',
             'can'     => 'user', // Esto Oculta las vistas al User conmbinado con la ruta //AppServiceProvicer.php
             
@@ -512,7 +512,7 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Desabhilitar Inscripciones',
+            'text' => 'Deshabilitar Inscripciones',
             'can'     => 'admin',
             'url'  => '/uinscription/index',
             'icon' => 'fas fa-fw fa-power-off',
